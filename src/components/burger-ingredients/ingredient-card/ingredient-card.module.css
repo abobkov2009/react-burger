@@ -1,0 +1,18 @@
+.card {
+    max-width: 272px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+}
+
+.price {
+    display: flex;
+    justify-content: center;
+}
+
+.ingredientname {
+    text-align: center;
+    height: 40px;
+}

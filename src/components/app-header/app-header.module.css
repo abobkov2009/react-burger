@@ -1,0 +1,26 @@
+.header {
+	background-color: #1C1C21;
+	min-height: 88px;
+}
+
+.navigation {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.navcontainer {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.logo {
+	position: absolute;
+	width: 290px;
+	height: 50px;
+	top: 20px;
+	left: 0;
+	right: 0;
+	margin: auto;
+}

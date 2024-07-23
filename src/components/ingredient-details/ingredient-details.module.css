@@ -1,0 +1,31 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 720px;
+    margin: auto;
+}
+
+.ingredientTitle {
+    width: 640px;
+    height: 40px;
+}
+
+.image {
+    max-width: 480px;
+    height: 240px;
+}
+
+.ingredientName {
+    width: 520px;
+    height: 30px;
+    text-align: center;
+}
+
+.nutritionDetails {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    width: 520px;
+}
