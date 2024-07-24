@@ -1,5 +1,9 @@
 .navitem {
     display: flex;
     align-items: center;
-    text-decoration: none;
+    text-decoration: none;    
+}
+
+.caption {
+    color: #F2F2F3;
 }

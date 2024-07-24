@@ -15,17 +15,20 @@ export default function AppHeader() {
                     <HeaderItem
                         icon={<BurgerIcon type="primary" />}
                         caption="Конструктор"
+                        url="#"
                     />
                     <HeaderItem
                         icon={<ListIcon type="secondary" />}
                         caption="Лента заказов"
                         isActive={false}
+                        url="#"
                     />
                 </div>
                 <HeaderItem
                     icon={<ProfileIcon type="secondary" />}
                     caption="Личный кабинет"
                     isActive={false}
+                    url="#"
                 />
             </nav>
         </header>

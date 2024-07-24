@@ -10,36 +10,39 @@ import modalStyles from './modal.module.css';
 
 
 Modal.propTypes = {
-    onCloseModalClick: PropTypes.func.isRequired,
+    setIsModalOpen: PropTypes.func.isRequired,
     buttonPositionTop: PropTypes.number,
     children: PropTypes.element,
 };
 
 const modalRoot = document.getElementById("modal-window") as HTMLDivElement;
 
-export default function Modal({ onCloseModalClick, buttonPositionTop, children }: InferProps<typeof Modal.propTypes>) {
-
-
+export default function Modal({ setIsModalOpen, buttonPositionTop, children }: InferProps<typeof Modal.propTypes>) {  
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
             if (e.key === 'Escape') {
-                onCloseModalClick();
+                closeModalWindow();
             }
         }
         document.addEventListener('keydown', handleKeyDown);
         return () => {
             document.removeEventListener('keydown', handleKeyDown);
         }
-    });
+    },[]);
+
+    const closeModalWindow = () => {
+        setIsModalOpen(false);
+    }
+
 
     const closeButtonTop = buttonPositionTop != null ? buttonPositionTop : 60;
 
     return ReactDOM.createPortal(
         (<div className={modalStyles.modal}>
-            <ModalOverlay onCloseModalClick={onCloseModalClick} />
+            <ModalOverlay onCloseModalClick={closeModalWindow} />
             <div className={modalStyles.container}>
                 {children}
-                <button className={modalStyles.closeModalButton} onClick={onCloseModalClick} style={{ top: `${closeButtonTop}px` }}>
+                <button className={modalStyles.closeModalButton} onClick={closeModalWindow} style={{ top: `${closeButtonTop}px` }}>
                     <CloseIcon type="primary" />
                 </button>
             </div>

@@ -12,7 +12,7 @@ BurgerIngredients.propTypes = {
 
 export default function BurgerIngredients({ ingredientsList, onIngridientItemClick }: InferProps<typeof BurgerIngredients.propTypes>) {
     return (
-        <section className={`pt-10 mr-10 ${burgerIngridientsStyles.container}`}>
+        <section className={`pt-10 ml-5 mr-10 ${burgerIngridientsStyles.container}`}>
             <h1 className="text text_type_main-large mb-5">Соберите бургер</h1>
             <IngredientsTabs />
             <ul className={`custom-scroll ${burgerIngridientsStyles.scrollableList}`}>

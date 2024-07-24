@@ -16,7 +16,3 @@ export const ingredientType = PropTypes.shape({
     __v: PropTypes.number.isRequired,
 });
 
-export const orderType = PropTypes.shape({
-    number: PropTypes.string.isRequired,
-});
-
