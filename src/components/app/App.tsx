@@ -8,7 +8,7 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 
-import { ingredientType, getIngridients } from '../../utils/burger-api';
+import { ingredientType, getIngredients } from '../../utils/burger-api';
 
 import appStyles from './app.module.css'
 
@@ -25,7 +25,7 @@ export default function App() {
         setDataLoadingError(null);
         setIsLoading(true);
 
-        getIngridients()
+        getIngredients()
             .then((result: any) => {
                 setIngredientsList(result.data)
             })

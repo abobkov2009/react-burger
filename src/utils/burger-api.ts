@@ -28,7 +28,7 @@ export type ingredientType = {
     __v: number;
 };
 
-export function getIngridients() : Promise<{succsess:boolean, data:ingredientType[]}> {
+export function getIngredients() : Promise<{succsess:boolean, data:ingredientType[]}> {
     return fetch(`${NORMA_API_URL}/ingredients`)
         .then(checkResponse)
         .then(checkSuccess);
