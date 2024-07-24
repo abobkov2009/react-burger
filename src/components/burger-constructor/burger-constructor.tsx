@@ -1,16 +1,15 @@
 import { useMemo } from 'react';
-import PropTypes, { InferProps } from 'prop-types';
-import { ingredientType } from '../../utils/propTypes';
 import { Button, ConstructorElement, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
+import { ingredientType } from '../../utils/burger-api';
 import burgerConstructorStyles from './burger-constructor.module.css';
 
-BurgerConstructor.propTypes = {
-    ingredientsList: PropTypes.arrayOf(ingredientType.isRequired).isRequired,
-    onOrderSubmit: PropTypes.func.isRequired,
+type BurgerConstructorProps = {
+    ingredientsList: ingredientType[];
+    onOrderSubmitButtonClick: () => void;
 };
 
-export default function BurgerConstructor({ ingredientsList, onOrderSubmit }: InferProps<typeof BurgerConstructor.propTypes>) {
+export default function BurgerConstructor({ ingredientsList, onOrderSubmitButtonClick }: BurgerConstructorProps) {
     const { bun, ingredients } = useMemo(() => {
         return {
             bun: ingredientsList.find(ingredient => ingredient.type === 'bun'),
@@ -67,7 +66,7 @@ export default function BurgerConstructor({ ingredientsList, onOrderSubmit }: In
                     type="primary"
                     size="large"
                     extraClass="ml-10"
-                    onClick={onOrderSubmit}
+                    onClick={onOrderSubmitButtonClick}
                 >Оформить заказ</Button>
             </div>
         </section>

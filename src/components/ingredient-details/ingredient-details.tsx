@@ -1,15 +1,12 @@
-import { InferProps } from 'prop-types';
-import { ingredientType } from '../../utils/propTypes';
-
 import NutritionItem from './nutrition-item/nutrition-item';
-
+import { ingredientType } from '../../utils/burger-api';
 import ingredientDetailStyles from './ingredient-details.module.css';
 
-IngredientDetails.propTypes = {
-    ingredient: ingredientType.isRequired,
+type IngredientDetailsProps = {
+    ingredient: ingredientType;
 };
 
-export default function IngredientDetails({ ingredient }: InferProps<typeof IngredientDetails.propTypes>) {
+export default function IngredientDetails({ ingredient }: IngredientDetailsProps) {
     return (
         <div className={`pt-10 ${ingredientDetailStyles.container}`}>
             <div className={`pl-10 pr-10 text text_type_main-large ${ingredientDetailStyles.ingredientTitle}`}>Детали ингредиента</div>

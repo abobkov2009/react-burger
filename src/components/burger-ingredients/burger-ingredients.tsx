@@ -1,24 +1,22 @@
-import PropTypes, { InferProps } from 'prop-types';
-import { ingredientType } from '../../utils/propTypes';
 import IngredientsTabs from './ingredients-tabs/ingredients-tabs';
 import IngredientsGroup from './ingredients-group/ingredients-group';
-
+import { ingredientType } from '../../utils/burger-api';
 import burgerIngridientsStyles from './burger-ingredients.module.css';
 
-BurgerIngredients.propTypes = {
-    ingredientsList: PropTypes.arrayOf(ingredientType.isRequired).isRequired,
-    onIngridientItemClick: PropTypes.func.isRequired
+type BurgerIngredientsProps = {
+    ingredientsList: ingredientType[];
+    onIngridientCardClick: (ingredient: ingredientType) => void;
 };
 
-export default function BurgerIngredients({ ingredientsList, onIngridientItemClick }: InferProps<typeof BurgerIngredients.propTypes>) {
+export default function BurgerIngredients({ ingredientsList, onIngridientCardClick }: BurgerIngredientsProps) {
     return (
         <section className={`pt-10 ml-5 mr-10 ${burgerIngridientsStyles.container}`}>
             <h1 className="text text_type_main-large mb-5">Соберите бургер</h1>
             <IngredientsTabs />
             <ul className={`custom-scroll ${burgerIngridientsStyles.scrollableList}`}>
-                <IngredientsGroup ingredientsList={ingredientsList.filter((ingredient) => ingredient.type === 'bun')} groupName='Булки' onIngridientItemClick={onIngridientItemClick} />
-                <IngredientsGroup ingredientsList={ingredientsList.filter((ingredient) => ingredient.type === 'sauce')} groupName='Соусы' onIngridientItemClick={onIngridientItemClick} />
-                <IngredientsGroup ingredientsList={ingredientsList.filter((ingredient) => ingredient.type === 'main')} groupName='Начинки' onIngridientItemClick={onIngridientItemClick} />
+                <IngredientsGroup ingredientsList={ingredientsList.filter((ingredient) => ingredient.type === 'bun')} groupName='Булки' onIngridientCardClick={onIngridientCardClick} />
+                <IngredientsGroup ingredientsList={ingredientsList.filter((ingredient) => ingredient.type === 'sauce')} groupName='Соусы' onIngridientCardClick={onIngridientCardClick} />
+                <IngredientsGroup ingredientsList={ingredientsList.filter((ingredient) => ingredient.type === 'main')} groupName='Начинки' onIngridientCardClick={onIngridientCardClick} />
             </ul>
         </section>
     )

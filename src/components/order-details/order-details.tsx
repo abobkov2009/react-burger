@@ -1,14 +1,12 @@
-import PropTypes, { InferProps } from 'prop-types';
-
 import orderDetailsStyles from './order-details.module.css';
 import orderDetailsImage from '../../images/order-detail.png'
 
-OrderDetails.propTypes = {
-    orderNumber: PropTypes.string.isRequired,
+type OrderDetailsProps = {
+    orderNumber: string;
 };
 
 
-export default function OrderDetails({ orderNumber }: InferProps<typeof OrderDetails.propTypes>) {
+export default function OrderDetails({ orderNumber }: OrderDetailsProps) {
     return (
         <div className={`pt-30 ${orderDetailsStyles.container}`}>
             <div className={`pb-8 text text_type_digits-large ${orderDetailsStyles.number}`}>{orderNumber}</div>

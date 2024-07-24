@@ -1,20 +1,18 @@
-import PropTypes, { InferProps } from 'prop-types';
-import { ingredientType } from '../../../utils/propTypes';
-
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 
+import { ingredientType } from '../../../utils/burger-api';
 import ingredientCardStyles from './ingredient-card.module.css';
 
-IngredientCard.propTypes = {
-    ingredient: ingredientType.isRequired,
-    counter_value: PropTypes.number.isRequired,
-    onIngredientClick: PropTypes.func.isRequired
+type IngredientCardProps = {
+    ingredient: ingredientType;
+    counter_value: number;
+    onClick: (ingredient: ingredientType) => void;
 };
 
 
-export default function IngredientCard({ ingredient, counter_value, onIngredientClick }: InferProps<typeof IngredientCard.propTypes>) {
+export default function IngredientCard({ ingredient, counter_value, onClick }: IngredientCardProps) {
     const handleOnClick = () => {
-        onIngredientClick(ingredient);
+        onClick(ingredient);
     }
 
     return (
