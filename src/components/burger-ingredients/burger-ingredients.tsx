@@ -5,10 +5,17 @@ import burgerIngridientsStyles from './burger-ingredients.module.css';
 
 type BurgerIngredientsProps = {
     ingredientsList: ingredientType[];
-    onIngridientCardClick: (ingredient: ingredientType) => void;
+    setIngredientModalOpen: (b: boolean) => void;
+    setSelectedIngredient: (ingredient: ingredientType) => void;
 };
 
-export default function BurgerIngredients({ ingredientsList, onIngridientCardClick }: BurgerIngredientsProps) {
+export default function BurgerIngredients({ ingredientsList, setIngredientModalOpen, setSelectedIngredient }: BurgerIngredientsProps) {
+
+    const onIngridientCardClick = (ingredient: ingredientType) => {
+        setSelectedIngredient(ingredient);
+        setIngredientModalOpen(true);
+    }
+
     return (
         <section className={`pt-10 ml-5 mr-10 ${burgerIngridientsStyles.container}`}>
             <h1 className="text text_type_main-large mb-5">Соберите бургер</h1>

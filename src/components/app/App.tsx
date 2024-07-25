@@ -17,7 +17,8 @@ export default function App() {
     const [isLoading, setIsLoading] = useState(true);
     const [ingredientsList, setIngredientsList] = useState([]);
     const [dataLoadingError, setDataLoadingError] = useState(null);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isOrderModalOpen, setOrderModalOpen] = useState(false);
+    const [isIngredientModalOpen, setIngredientModalOpen] = useState(false);
     const [selectedIngredient, setSelectedIngredient] = useState<ingredientType | null>(null);
 
 
@@ -37,15 +38,6 @@ export default function App() {
             })
     }, []);
 
-    const onIngridientCardClick = (ingredient: ingredientType) => {
-        setSelectedIngredient(ingredient);
-        setIsModalOpen(true);
-    }
-
-    const onOrderSubmitButtonClick = () => {
-        setSelectedIngredient(null);
-        setIsModalOpen(true);
-    }
 
     return (
         <div className={appStyles.page}>
@@ -55,21 +47,26 @@ export default function App() {
             {
                 !isLoading && (dataLoadingError == null) && (
                     <main className={appStyles.mainContent}>
-                        <BurgerIngredients ingredientsList={ingredientsList} onIngridientCardClick={onIngridientCardClick} />
-                        <BurgerConstructor ingredientsList={ingredientsList} onOrderSubmitButtonClick={onOrderSubmitButtonClick} />
+                        <BurgerIngredients ingredientsList={ingredientsList} setIngredientModalOpen={setIngredientModalOpen} setSelectedIngredient={setSelectedIngredient}  />
+                        <BurgerConstructor ingredientsList={ingredientsList} setOrderModalOpen={setOrderModalOpen} />
                     </main>
                 )
             }
             {
-                isModalOpen && (
-                    <Modal setIsModalOpen={setIsModalOpen} buttonPositionTop={selectedIngredient ? 48 : 60}>
-                        {selectedIngredient
-                            ? (<IngredientDetails ingredient={selectedIngredient} />)
-                            : (<OrderDetails orderNumber="034536" />)
-                        }
+                isIngredientModalOpen && (selectedIngredient != null) && (
+                    <Modal setModalWindowOpen={setIngredientModalOpen}>
+                        <IngredientDetails ingredient={selectedIngredient} />
                     </Modal>
                 )
             }
+            {
+                isOrderModalOpen && (
+                    <Modal setModalWindowOpen={setOrderModalOpen}>
+                        <OrderDetails orderNumber="034536" />
+                    </Modal>
+                )
+            }
+
         </div>
     )
 };

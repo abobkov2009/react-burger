@@ -6,16 +6,20 @@ import burgerConstructorStyles from './burger-constructor.module.css';
 
 type BurgerConstructorProps = {
     ingredientsList: ingredientType[];
-    onOrderSubmitButtonClick: () => void;
+    setOrderModalOpen: (b: boolean) => void;
 };
 
-export default function BurgerConstructor({ ingredientsList, onOrderSubmitButtonClick }: BurgerConstructorProps) {
+export default function BurgerConstructor({ ingredientsList, setOrderModalOpen }: BurgerConstructorProps) {
     const { bun, ingredients } = useMemo(() => {
         return {
             bun: ingredientsList.find(ingredient => ingredient.type === 'bun'),
             ingredients: ingredientsList.filter(ingredient => ingredient.type !== 'bun'),
         };
     }, [ingredientsList]);
+
+    const onOrderSubmitButtonClick = () => {
+        setOrderModalOpen(true);
+    }
 
     const totalOrderPrice = 610;
 
@@ -66,7 +70,7 @@ export default function BurgerConstructor({ ingredientsList, onOrderSubmitButton
                     type="primary"
                     size="large"
                     extraClass="ml-10"
-                    onClick={onOrderSubmitButtonClick}
+                    onClick={(onOrderSubmitButtonClick)}
                 >Оформить заказ</Button>
             </div>
         </section>

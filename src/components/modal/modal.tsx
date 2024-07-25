@@ -7,14 +7,13 @@ import modalStyles from './modal.module.css';
 
 
 type ModalProps = {
-    setIsModalOpen: (b: boolean) => void;
-    buttonPositionTop?: number;
+    setModalWindowOpen: (b: boolean) => void;
     children: React.ReactElement;
 };
 
 const modalRoot = document.getElementById("modal-window") as HTMLDivElement;
 
-export default function Modal({ setIsModalOpen, buttonPositionTop, children }: ModalProps) {
+export default function Modal({ setModalWindowOpen, children }: ModalProps) {
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
             if (e.key === 'Escape') {
@@ -30,18 +29,15 @@ export default function Modal({ setIsModalOpen, buttonPositionTop, children }: M
     }, []);
 
     const closeModalWindow = () => {
-        setIsModalOpen(false);
+        setModalWindowOpen(false);
     }
-
-
-    const closeButtonTop = buttonPositionTop != null ? buttonPositionTop : 60;
 
     return ReactDOM.createPortal(
         (<div className={modalStyles.modal}>
             <ModalOverlay onCloseModalClick={closeModalWindow} />
             <div className={modalStyles.container}>
                 {children}
-                <button className={modalStyles.closeModalButton} onClick={closeModalWindow} style={{ top: `${closeButtonTop}px` }}>
+                <button className={modalStyles.closeModalButton} onClick={closeModalWindow}>
                     <CloseIcon type="primary" />
                 </button>
             </div>
@@ -49,4 +45,4 @@ export default function Modal({ setIsModalOpen, buttonPositionTop, children }: M
         )
         , modalRoot
     )
-}
+};
