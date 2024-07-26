@@ -1,0 +1,16 @@
+.page {
+    display: flex;
+    flex-direction: column;    
+    height: 100vh;
+    max-width: 1300px;
+    width: calc(100% - 100px);
+    margin: 0 auto;
+}
+
+.mainContent {
+    max-height: 100%;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;    
+    justify-content:end;
+}
