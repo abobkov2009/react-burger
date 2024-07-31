@@ -7,12 +7,11 @@ import ingridientsGroupStyles from './ingredients-group.module.css'
 type IngredientsGroupProps = {
     ingredientsList: ingredientType[];
     groupName: string;
-    onIngridientCardClick: (ingredient: ingredientType) => void;
 };
 
 export type Ref = HTMLLIElement;
 
-export const IngredientsGroup = forwardRef<Ref, IngredientsGroupProps>(({ingredientsList, groupName, onIngridientCardClick},ref) => {
+export const IngredientsGroup = forwardRef<Ref, IngredientsGroupProps>(({ ingredientsList, groupName }, ref) => {
     return (
         <li ref={ref}>
             <h2 className="text text_type_main-medium mb-6">{groupName}</h2>
@@ -22,7 +21,6 @@ export const IngredientsGroup = forwardRef<Ref, IngredientsGroupProps>(({ingredi
                         key={ingredient._id}
                         ingredient={ingredient}
                         counter_value={index}
-                        onClick={onIngridientCardClick}
                     />
                 ))
                 }

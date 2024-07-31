@@ -1,5 +1,5 @@
 import orderDetailsStyles from './order-details.module.css';
-import orderDetailsImage from '../../images/order-detail.png'
+import orderDetailsImage from '../../../images/order-detail.png'
 
 type OrderDetailsProps = {
     orderNumber: string;

@@ -1,4 +1,7 @@
 import { NORMA_API_URL } from './constants';
+import { getIngredientsStarted, getIngredientsSuccss, getIngredientsFailed } from '../services/ingredientsSlice';
+
+
 
 const checkResponse = (response: { ok: any; json: () => Promise<any>; }) => {
     return response.ok ? response.json() : response.json().then(err => Promise.reject(err));
@@ -28,9 +31,25 @@ export type ingredientType = {
     __v: number;
 };
 
-export function getIngredients() : Promise<{succsess:boolean, data:ingredientType[]}> {
+/*
+function requestIngredients(): Promise<{ succsess: boolean, data: ingredientType[] }> {
     return fetch(`${NORMA_API_URL}/ingredients`)
         .then(checkResponse)
         .then(checkSuccess);
 }
+*/
 
+export function loadIngredients() {
+    return function (dispatch: any) {
+        dispatch(getIngredientsStarted());
+        fetch(`${NORMA_API_URL}/ingredients`)
+            .then(checkResponse)
+            .then(checkSuccess)
+            .then((result) => {
+                dispatch(getIngredientsSuccss(result.data))
+            })
+            .catch(() => {
+                dispatch(getIngredientsFailed());
+            })
+    };
+}

@@ -5,7 +5,7 @@ import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import modalStyles from './modal.module.css';
-import { closeAllModalWindows } from '../../services/modal';
+import { closeAllModalWindows } from '../../services/modalSlice';
 
 type ModalProps = {
     children: React.ReactElement;

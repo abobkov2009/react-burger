@@ -1,18 +1,25 @@
+import { useAppDispatch } from '../../../utils/hooks';
+
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { ingredientType } from '../../../utils/burger-api';
+import { showIngredientModalWindow } from '../../../services/modalSlice';
+import { setCurrentIngredient } from '../../../services/ingredientsSlice';
+
 import ingredientCardStyles from './ingredient-card.module.css';
 
 type IngredientCardProps = {
     ingredient: ingredientType;
     counter_value: number;
-    onClick: (ingredient: ingredientType) => void;
 };
 
 
-export default function IngredientCard({ ingredient, counter_value, onClick }: IngredientCardProps) {
-    const handleOnClick = () => {     
-        onClick(ingredient);
+export default function IngredientCard({ ingredient, counter_value }: IngredientCardProps) {
+    const dispatch = useAppDispatch();
+
+    const handleOnClick = () => {
+        dispatch(setCurrentIngredient(ingredient));
+        dispatch(showIngredientModalWindow())
     }
 
     return (
