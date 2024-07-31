@@ -4,7 +4,6 @@ import AlertMessage from '../alert-message/AlertMessage';
 import AppHeader from "../app-header/app-header";
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
-import IngredientDetails from '../burger-ingredients/ingredient-details/ingredient-details';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 
@@ -20,9 +19,7 @@ export default function App() {
     const [isLoading, setIsLoading] = useState(true);
     const [ingredientsList, setIngredientsList] = useState([]);
     const [dataLoadingError, setDataLoadingError] = useState(null);
-
-    const isIngredientModalOpen = useAppSelector(state => state.modalState.isIngredientModalOpen);
-    const [selectedIngredient, setSelectedIngredient] = useState<ingredientType | null>(null);
+        
     const isOrderModalOpen = useAppSelector(state => state.modalState.isOrderDetailsModalOpen);    
     
 
@@ -52,16 +49,9 @@ export default function App() {
             {
                 !isLoading && (dataLoadingError == null) && (
                     <main className={appStyles.mainContent}>
-                        <BurgerIngredients ingredientsList={ingredientsList} setSelectedIngredient={setSelectedIngredient} />
+                        <BurgerIngredients ingredientsList={ingredientsList} />
                         <BurgerConstructor ingredientsList={ingredientsList} />
                     </main>
-                )
-            }
-            {
-                isIngredientModalOpen && (selectedIngredient != null) && (
-                <Modal>
-                    <IngredientDetails ingredient={selectedIngredient} />
-                </Modal>
                 )
             }
             {

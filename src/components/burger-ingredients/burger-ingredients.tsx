@@ -3,8 +3,8 @@ import { useAppDispatch, useAppSelector } from '../../utils/hooks';
 
 import IngredientsTabs from './ingredients-tabs/ingredients-tabs';
 import IngredientsGroup from './ingredients-group/ingredients-group';
-//import IngredientDetails from './ingredient-details/ingredient-details';
-//import Modal from '../modal/modal';
+import IngredientDetails from './ingredient-details/ingredient-details';
+import Modal from '../modal/modal';
 import { ingredientType } from '../../utils/burger-api';
 import burgerIngridientsStyles from './burger-ingredients.module.css';
 import { showIngredientModalWindow } from '../../services/modal';
@@ -12,14 +12,15 @@ import { showIngredientModalWindow } from '../../services/modal';
 
 type BurgerIngredientsProps = {
     ingredientsList: ingredientType[];
-    setSelectedIngredient: (ingredient: ingredientType) => void;
 };
 
-export default function BurgerIngredients({ ingredientsList, setSelectedIngredient }: BurgerIngredientsProps) {
+export default function BurgerIngredients({ ingredientsList }: BurgerIngredientsProps) {
     const dispatch = useAppDispatch();
-
+    
+    const isIngredientModalOpen = useAppSelector(state => state.modalState.isIngredientModalOpen);
+    const [selectedIngredient, setSelectedIngredient] = useState<ingredientType | null>(null);
     const [currentCategory, setCurrentCategory] = useState('buns');
-
+    
     const bunsRef = useRef<HTMLLIElement>(null);
     const saucesRef = useRef<HTMLLIElement>(null);
     const mainsRef = useRef<HTMLLIElement>(null);
@@ -67,6 +68,13 @@ export default function BurgerIngredients({ ingredientsList, setSelectedIngredie
                 <IngredientsGroup ref={saucesRef} ingredientsList={ingredientsList.filter((ingredient) => ingredient.type === 'sauce')} groupName='Соусы' onIngridientCardClick={onIngridientCardClick} />
                 <IngredientsGroup ref={mainsRef} ingredientsList={ingredientsList.filter((ingredient) => ingredient.type === 'main')} groupName='Начинки' onIngridientCardClick={onIngridientCardClick} />
             </ul>
+            {
+                isIngredientModalOpen && (selectedIngredient != null) && (
+                <Modal>
+                    <IngredientDetails ingredient={selectedIngredient} />
+                </Modal>
+                )
+            }
         </section>
     )
 };
