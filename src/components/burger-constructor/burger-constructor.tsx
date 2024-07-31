@@ -1,15 +1,18 @@
 import { useMemo } from 'react';
+import { useDispatch } from 'react-redux';
 import { Button, ConstructorElement, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { ingredientType } from '../../utils/burger-api';
 import burgerConstructorStyles from './burger-constructor.module.css';
+import { showOrderDetailsModalWindow } from '../../services/modal';
 
 type BurgerConstructorProps = {
     ingredientsList: ingredientType[];
-    setOrderModalOpen: (b: boolean) => void;
 };
 
-export default function BurgerConstructor({ ingredientsList, setOrderModalOpen }: BurgerConstructorProps) {
+export default function BurgerConstructor({ ingredientsList }: BurgerConstructorProps) {
+    const dispatch = useDispatch();
+
     const { bun, ingredients } = useMemo(() => {
         return {
             bun: ingredientsList.find(ingredient => ingredient.type === 'bun'),
@@ -18,7 +21,7 @@ export default function BurgerConstructor({ ingredientsList, setOrderModalOpen }
     }, [ingredientsList]);
 
     const onOrderSubmitButtonClick = () => {
-        setOrderModalOpen(true);
+        dispatch(showOrderDetailsModalWindow())
     }
 
     const totalOrderPrice = 610;

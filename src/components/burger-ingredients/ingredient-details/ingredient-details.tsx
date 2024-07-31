@@ -1,5 +1,5 @@
 import NutritionItem from './nutrition-item/nutrition-item';
-import { ingredientType } from '../../utils/burger-api';
+import { ingredientType } from '../../../utils/burger-api';
 import ingredientDetailStyles from './ingredient-details.module.css';
 
 type IngredientDetailsProps = {

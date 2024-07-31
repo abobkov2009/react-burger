@@ -4,22 +4,27 @@ import AlertMessage from '../alert-message/AlertMessage';
 import AppHeader from "../app-header/app-header";
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
-import IngredientDetails from '../ingredient-details/ingredient-details';
+import IngredientDetails from '../burger-ingredients/ingredient-details/ingredient-details';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 
 import { ingredientType, getIngredients } from '../../utils/burger-api';
+import { useAppDispatch, useAppSelector } from '../../utils/hooks';
 
 import appStyles from './app.module.css'
 
 
 export default function App() {
+    const dispatch = useAppDispatch();
+
     const [isLoading, setIsLoading] = useState(true);
     const [ingredientsList, setIngredientsList] = useState([]);
     const [dataLoadingError, setDataLoadingError] = useState(null);
-    const [isOrderModalOpen, setOrderModalOpen] = useState(false);
-    const [isIngredientModalOpen, setIngredientModalOpen] = useState(false);
+
+    const isIngredientModalOpen = useAppSelector(state => state.modalState.isIngredientModalOpen);
     const [selectedIngredient, setSelectedIngredient] = useState<ingredientType | null>(null);
+    const isOrderModalOpen = useAppSelector(state => state.modalState.isOrderDetailsModalOpen);    
+    
 
 
     useEffect(() => {
@@ -47,21 +52,21 @@ export default function App() {
             {
                 !isLoading && (dataLoadingError == null) && (
                     <main className={appStyles.mainContent}>
-                        <BurgerIngredients ingredientsList={ingredientsList} setIngredientModalOpen={setIngredientModalOpen} setSelectedIngredient={setSelectedIngredient}  />
-                        <BurgerConstructor ingredientsList={ingredientsList} setOrderModalOpen={setOrderModalOpen} />
+                        <BurgerIngredients ingredientsList={ingredientsList} setSelectedIngredient={setSelectedIngredient} />
+                        <BurgerConstructor ingredientsList={ingredientsList} />
                     </main>
                 )
             }
             {
                 isIngredientModalOpen && (selectedIngredient != null) && (
-                    <Modal setModalWindowOpen={setIngredientModalOpen}>
-                        <IngredientDetails ingredient={selectedIngredient} />
-                    </Modal>
+                <Modal>
+                    <IngredientDetails ingredient={selectedIngredient} />
+                </Modal>
                 )
             }
             {
                 isOrderModalOpen && (
-                    <Modal setModalWindowOpen={setOrderModalOpen}>
+                    <Modal>
                         <OrderDetails orderNumber="034536" />
                     </Modal>
                 )

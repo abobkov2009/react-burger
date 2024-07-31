@@ -11,7 +11,7 @@ type IngredientCardProps = {
 
 
 export default function IngredientCard({ ingredient, counter_value, onClick }: IngredientCardProps) {
-    const handleOnClick = () => {
+    const handleOnClick = () => {     
         onClick(ingredient);
     }
 

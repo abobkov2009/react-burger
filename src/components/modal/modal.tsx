@@ -1,19 +1,21 @@
 import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import ReactDOM from 'react-dom';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import modalStyles from './modal.module.css';
-
+import { closeAllModalWindows } from '../../services/modal';
 
 type ModalProps = {
-    setModalWindowOpen: (b: boolean) => void;
     children: React.ReactElement;
 };
 
 const modalRoot = document.getElementById("modal-window") as HTMLDivElement;
 
-export default function Modal({ setModalWindowOpen, children }: ModalProps) {
+export default function Modal({ children }: ModalProps) {
+    const dispatch = useDispatch();
+
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
             if (e.key === 'Escape') {
@@ -29,7 +31,7 @@ export default function Modal({ setModalWindowOpen, children }: ModalProps) {
     }, []);
 
     const closeModalWindow = () => {
-        setModalWindowOpen(false);
+        dispatch(closeAllModalWindows());
     }
 
     return ReactDOM.createPortal(
