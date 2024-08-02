@@ -1,33 +1,20 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../utils/hooks';
+import { useMemo, useRef, useState } from 'react';
+import { useAppSelector } from '../../utils/hooks';
+import { useGetIngredientsQuery } from '../../services/api';
 
 import AlertMessage from '../alert-message/AlertMessage';
 import IngredientsTabs from './ingredients-tabs/ingredients-tabs';
 import IngredientsGroup from './ingredients-group/ingredients-group';
 import IngredientDetails from './ingredient-details/ingredient-details';
 import Modal from '../modal/modal';
-import { loadIngredients } from '../../utils/burger-api';
-//import { useGetIngredientsQuery } from '../../utils/api';
 
 import burgerIngridientsStyles from './burger-ingredients.module.css';
 
 
 export default function BurgerIngredients() {
-    const dispatch = useAppDispatch();
+    const { data: ingredientsList, error, isLoading } = useGetIngredientsQuery();
 
-    //const { data, error, isLoading } = useGetIngredientsQuery();
-
-    useEffect(() => {
-        dispatch(loadIngredients());
-    }, [dispatch]);
-
-    const ingredientsList = useAppSelector(state => state.ingredients.ingredientsList);
-    const ingredientsFailed = useAppSelector(state => state.ingredients.ingredientsFailed);
-    const ingredientsRequested = useAppSelector(state => state.ingredients.ingredientsRequested);
-
-    const ingredientsInOrder = useAppSelector(state => state.ingredients.ingredientsInOrder);
-
-    const isIngredientModalOpen = useAppSelector(state => state.modals.isIngredientModalOpen);
+    const { ingredientsInOrder, currentIngredient } = useAppSelector(state => state.ingredients);
 
     const ingedientsAmounts = useMemo(() => {
         const amounts: { [id: string]: number } = {};
@@ -40,9 +27,9 @@ export default function BurgerIngredients() {
         return amounts;
     }, [ingredientsInOrder]);
 
-    const bunsList = useMemo(() => ingredientsList.filter(ingredient => ingredient.type === 'bun').map(ingredient => { return { ...ingredient, amount: ingedientsAmounts[ingredient._id] | 0 } }), [ingredientsList, ingedientsAmounts]);
-    const saucesList = useMemo(() => ingredientsList.filter(ingredient => ingredient.type === 'sauce').map(ingredient => { return { ...ingredient, amount: ingedientsAmounts[ingredient._id] | 0 } }), [ingredientsList, ingedientsAmounts]);
-    const mainsList = useMemo(() => ingredientsList.filter(ingredient => ingredient.type === 'main').map(ingredient => { return { ...ingredient, amount: ingedientsAmounts[ingredient._id] | 0 } }), [ingredientsList, ingedientsAmounts]);
+    const bunsList = useMemo(() => ingredientsList?.filter(ingredient => ingredient.type === 'bun').map(ingredient => { return { ...ingredient, amount: ingedientsAmounts[ingredient._id] | 0 } }), [ingredientsList, ingedientsAmounts]);
+    const saucesList = useMemo(() => ingredientsList?.filter(ingredient => ingredient.type === 'sauce').map(ingredient => { return { ...ingredient, amount: ingedientsAmounts[ingredient._id] | 0 } }), [ingredientsList, ingedientsAmounts]);
+    const mainsList = useMemo(() => ingredientsList?.filter(ingredient => ingredient.type === 'main').map(ingredient => { return { ...ingredient, amount: ingedientsAmounts[ingredient._id] | 0 } }), [ingredientsList, ingedientsAmounts]);
 
     const [selectedCategory, setSelectedCategory] = useState('buns');
 
@@ -81,20 +68,20 @@ export default function BurgerIngredients() {
 
     return (
         <section className={`pt-10 ml-5 mr-10 ${burgerIngridientsStyles.container}`}>
-            {ingredientsRequested && (<AlertMessage header={"Идет загрузка списка ингредиентов"} />)}
-            {ingredientsFailed && (<AlertMessage header={"Произошла ошибка при загрузке списка ингредиентов..."} />)}
-            {!ingredientsRequested && !ingredientsFailed && (
+            {isLoading && (<AlertMessage header="Идет загрузка списка ингредиентов" />)}
+            {error && (<AlertMessage header="Произошла ошибка при загрузке списка ингредиентов..." message={('data' in error) ? JSON.stringify(error.data) : 'Неизвестная ошибка'} />)}
+            {!isLoading && !error && (
                 <>
                     <h1 className="text text_type_main-large mb-5">Соберите бургер</h1>
                     <IngredientsTabs selectedCategory={selectedCategory} onTabClick={handleTabClick} />
                     <ul ref={containerRef} onScroll={handleScroll} className={`custom-scroll ${burgerIngridientsStyles.scrollableList}`} >
-                        <IngredientsGroup ref={bunsRef} ingredientsList={bunsList} groupName='Булки' />
-                        <IngredientsGroup ref={saucesRef} ingredientsList={saucesList} groupName='Соусы' />
-                        <IngredientsGroup ref={mainsRef} ingredientsList={mainsList} groupName='Начинки' />
+                        {bunsList && <IngredientsGroup ref={bunsRef} ingredientsList={bunsList} groupName='Булки' />}
+                        {saucesList && <IngredientsGroup ref={saucesRef} ingredientsList={saucesList} groupName='Соусы' />}
+                        {mainsList && <IngredientsGroup ref={mainsRef} ingredientsList={mainsList} groupName='Начинки' />}
                     </ul>
                 </>)
             }
-            {isIngredientModalOpen && (
+            {currentIngredient && (
                 <Modal>
                     <IngredientDetails />
                 </Modal>)

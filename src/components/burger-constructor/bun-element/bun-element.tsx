@@ -1,6 +1,6 @@
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { ingredientType } from '../../../utils/burger-api';
+import { ingredientType } from '../../../services/types';
 import bunElementStyles from './bun-element.module.css';
 
 type BunElementProps = {

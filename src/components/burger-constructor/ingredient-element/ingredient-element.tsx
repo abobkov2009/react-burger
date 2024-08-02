@@ -2,28 +2,29 @@ import { useDrag, useDrop } from "react-dnd";
 import { useAppDispatch } from '../../../utils/hooks';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { ingredientType } from '../../../utils/burger-api';
-import { deleteIngredientFromOrder } from '../../../services/ingredientsSlice';
+import { DND_ORDER_INGREDIENTS } from "../../../utils/constants";
+import { ingredientWithUuidType } from '../../../services/types';
+import { ingredientFromOrderRemoved } from '../../../services/reducers';
 import ingredientElementStyles from './ingredient-element.module.css';
 
 type IngredientElementProps = {
-    ingredient: ingredientType & { _uuid: string };
+    ingredient: ingredientWithUuidType;
 };
 
 
 export default function IngredientElement({ ingredient }: IngredientElementProps) {
     const dispatch = useAppDispatch();
-    
-    const [{ isDragging }, dragRef] = useDrag({        
-        type: 'ingredientInOrder',
+
+    const [{ isDragging }, dragRef] = useDrag({
+        type: DND_ORDER_INGREDIENTS,
         item: ingredient,
         collect: (monitor) => ({
             isDragging: monitor.isDragging(),
         }),
-      });    
+    });
 
     const handleDeleteClicked = () => {
-        dispatch(deleteIngredientFromOrder(ingredient));
+        dispatch(ingredientFromOrderRemoved(ingredient));
     }
 
     return (

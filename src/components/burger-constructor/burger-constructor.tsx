@@ -8,10 +8,11 @@ import IngredientElement from './ingredient-element/ingredient-element';
 import Modal from '../modal/modal';
 import OrderDetails from './order-details/order-details';
 
+import { ingredientType } from '../../services/types';
+import { ingredientToOrderAdded, orderAccepted } from '../../services/reducers';
+import { DND_BURGER_INGREDIENTS } from '../../utils/constants';
+
 import burgerConstructorStyles from './burger-constructor.module.css';
-import { ingredientType } from '../../utils/burger-api';
-import { addIngredientToOrder } from '../../services/ingredientsSlice';
-import { showOrderDetailsModalWindow } from '../../services/modalSlice';
 
 interface DropCollectedProps {
     isOver: boolean;
@@ -19,8 +20,7 @@ interface DropCollectedProps {
 
 export default function BurgerConstructor() {
     const dispatch = useAppDispatch();
-    const isOrderModalOpen = useAppSelector(state => state.modals.isOrderDetailsModalOpen);
-    const ingredientsInOrder = useAppSelector(state => state.ingredients.ingredientsInOrder);
+    const {ingredientsInOrder, order} = useAppSelector(state => state.ingredients);
 
     const totalOrderPrice = useMemo(() => {
         const totalStuffingPrice = ingredientsInOrder.stuffing.reduce((total, ingredient) => total + ingredient.price, 0);
@@ -29,9 +29,9 @@ export default function BurgerConstructor() {
 
 
     const [{ isOver }, dropTargetRef] = useDrop<ingredientType, void, DropCollectedProps>({
-        accept: 'ingredient',
+        accept: DND_BURGER_INGREDIENTS,
         drop(item: ingredientType) {
-            dispatch(addIngredientToOrder(item))
+            dispatch(ingredientToOrderAdded(item))
         },
         collect: monitor => ({
             isOver: monitor.isOver()
@@ -39,7 +39,7 @@ export default function BurgerConstructor() {
     });
 
     const onOrderSubmitButtonClick = () => {
-        dispatch(showOrderDetailsModalWindow())
+        dispatch(orderAccepted());
     }
 
     return (
@@ -87,7 +87,7 @@ export default function BurgerConstructor() {
 
             </div>
             {
-                isOrderModalOpen && (
+                order && (
                     <Modal>
                         <OrderDetails orderNumber="034536" />
                     </Modal>

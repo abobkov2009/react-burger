@@ -8,7 +8,7 @@ import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import appStyles from './app.module.css'
 
 
-export default function App() {    
+export default function App() {
     return (
         <div className={appStyles.page}>
             <AppHeader />

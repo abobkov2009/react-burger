@@ -5,7 +5,7 @@ import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import modalStyles from './modal.module.css';
-import { closeAllModalWindows } from '../../services/modalSlice';
+import { modalWindowClosed } from '../../services/reducers';
 
 type ModalProps = {
     children: React.ReactElement;
@@ -31,7 +31,7 @@ export default function Modal({ children }: ModalProps) {
     }, []);
 
     const closeModalWindow = () => {
-        dispatch(closeAllModalWindows());
+        dispatch(modalWindowClosed());
     }
 
     return ReactDOM.createPortal(
