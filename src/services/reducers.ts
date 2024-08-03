@@ -5,7 +5,6 @@ import uuid from 'react-uuid';
 import { ingredientType, ingredientWithUuidType } from './types';
 
 export interface IngredientsState {
-    ingredientsList: ingredientType[],
     currentIngredient: ingredientType | null,
 
     ingredientsInOrder: {
@@ -16,7 +15,6 @@ export interface IngredientsState {
 }
 
 const initialState: IngredientsState = {
-    ingredientsList: [],
     currentIngredient: null,
 
     ingredientsInOrder: {
@@ -40,6 +38,14 @@ export const ingredientsSlice = createSlice({
         },
         currentIngredientCleared: (state) => {
             state.currentIngredient = null;
+        },
+        ingredientsReordered: (state, action) =>{
+            const { dragIndex, hoverIndex } = action.payload;
+            if (dragIndex >= 0 && dragIndex < state.ingredientsInOrder.stuffing.length &&
+                hoverIndex >= 0 && hoverIndex < state.ingredientsInOrder.stuffing.length) {
+              const [movedIngredient] = state.ingredientsInOrder.stuffing.splice(dragIndex, 1);
+              state.ingredientsInOrder.stuffing.splice(hoverIndex, 0, movedIngredient);
+            }
         },
         ingredientToOrderAdded: {
             reducer: (state, action: PayloadAction<ingredientType>) => {
@@ -74,7 +80,7 @@ export const ingredientsSlice = createSlice({
 
 
 export const { modalWindowClosed, currentIngredientWasSet, currentIngredientCleared,
-    ingredientToOrderAdded, ingredientFromOrderRemoved, 
-    orderAccepted } = ingredientsSlice.actions
+    ingredientToOrderAdded, ingredientFromOrderRemoved, ingredientsReordered,
+    orderAccepted } = ingredientsSlice.actions;
 
 

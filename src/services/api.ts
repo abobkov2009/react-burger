@@ -14,7 +14,12 @@ export const normaApi = createApi({
     endpoints: (builder) => ({
         getIngredients: builder.query<ingredientType[], void>({
             query: () => `/ingredients`,
-            transformResponse: (response: responseType, meta, arg) => response.data,
+            transformResponse: (response: responseType) =>{
+                if (response.success === false) {
+                    throw new Error('Запрос не вернул ингредиенты');
+                }
+                return response.data;
+            } 
         }),
     }),
 });

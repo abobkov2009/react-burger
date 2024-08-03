@@ -4,3 +4,5 @@ import { normaApi } from './api';
 
 export const rootReducer = combineSlices(normaApi, ingredientsSlice)
 
+
+

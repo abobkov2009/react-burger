@@ -1,6 +1,6 @@
-import { useMemo } from 'react';
 import { useDrop } from "react-dnd";
-import { useAppDispatch, useAppSelector } from '../../utils/hooks';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from '../../utils/hooks';
 
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import BunElement from './bun-element/bun-element';
@@ -10,6 +10,7 @@ import OrderDetails from './order-details/order-details';
 
 import { ingredientType } from '../../services/types';
 import { ingredientToOrderAdded, orderAccepted } from '../../services/reducers';
+import { selectIngredientsInOrder, selectTotalOrderPrice, selectOrder } from '../../services/selectors';
 import { DND_BURGER_INGREDIENTS } from '../../utils/constants';
 
 import burgerConstructorStyles from './burger-constructor.module.css';
@@ -20,12 +21,10 @@ interface DropCollectedProps {
 
 export default function BurgerConstructor() {
     const dispatch = useAppDispatch();
-    const {ingredientsInOrder, order} = useAppSelector(state => state.ingredients);
-
-    const totalOrderPrice = useMemo(() => {
-        const totalStuffingPrice = ingredientsInOrder.stuffing.reduce((total, ingredient) => total + ingredient.price, 0);
-        return totalStuffingPrice + (ingredientsInOrder.bun ? ingredientsInOrder.bun.price * 2 : 0);
-    }, [ingredientsInOrder]);
+    
+    const order = useSelector(selectOrder);
+    const ingredientsInOrder = useSelector(selectIngredientsInOrder);
+    const totalOrderPrice = useSelector(selectTotalOrderPrice);
 
 
     const [{ isOver }, dropTargetRef] = useDrop<ingredientType, void, DropCollectedProps>({
@@ -53,7 +52,7 @@ export default function BurgerConstructor() {
                 </div>
                 {(ingredientsInOrder.stuffing.length !== 0)
                     ? (<ul className={`mt-4 mb-4 pl-4 custom-scroll ${burgerConstructorStyles.scrollableList}`}>
-                        {ingredientsInOrder.stuffing.map(ingredient => (<IngredientElement key={ingredient._uuid} ingredient={ingredient} />))}
+                        {ingredientsInOrder.stuffing.map((ingredient, index) => (<IngredientElement key={ingredient._uuid} ingredient={ingredient} index={index} />))}
                     </ul>)
                     : (<div className="mt-4 mb-4 pr-4 ml-8">
                         <div className="constructor-element">

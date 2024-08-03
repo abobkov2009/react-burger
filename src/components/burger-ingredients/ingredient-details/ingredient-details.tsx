@@ -1,11 +1,12 @@
-import { useAppSelector } from '../../../utils/hooks';
-
+import { useSelector } from 'react-redux';
 import NutritionItem from './nutrition-item/nutrition-item';
+import { selectCurrentIngredient } from '../../../services/selectors';
+
 import ingredientDetailStyles from './ingredient-details.module.css';
 
 export default function IngredientDetails() {
 
-    const currentIngredient = useAppSelector(state => state.ingredients.currentIngredient);
+    const currentIngredient = useSelector(selectCurrentIngredient);
 
     return currentIngredient &&
         (
