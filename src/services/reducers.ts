@@ -11,7 +11,13 @@ export interface IngredientsState {
         bun: ingredientWithUuidType | null,
         stuffing: ingredientWithUuidType[],
     },
-    order: boolean | null,
+    orderData: {
+        name: string,
+        order: {
+            number: number,
+        }
+        success: boolean,
+    } | null
 }
 
 const initialState: IngredientsState = {
@@ -21,7 +27,7 @@ const initialState: IngredientsState = {
         bun: null,
         stuffing: [],
     },
-    order: null,
+    orderData: null,
 };
 
 
@@ -29,9 +35,10 @@ export const ingredientsSlice = createSlice({
     name: 'ingredients',
     initialState,
     reducers: {
-        modalWindowClosed: (state)=>{
+        modalWindowClosed: (state) => {
+            if (state.orderData!=null) state.ingredientsInOrder = initialState.ingredientsInOrder;
             state.currentIngredient = null;
-            state.order = null;
+            state.orderData = null;
         },
         currentIngredientWasSet: (state, action: PayloadAction<ingredientType>) => {
             state.currentIngredient = action.payload;
@@ -39,12 +46,12 @@ export const ingredientsSlice = createSlice({
         currentIngredientCleared: (state) => {
             state.currentIngredient = null;
         },
-        ingredientsReordered: (state, action) =>{
+        ingredientsReordered: (state, action) => {
             const { dragIndex, hoverIndex } = action.payload;
             if (dragIndex >= 0 && dragIndex < state.ingredientsInOrder.stuffing.length &&
                 hoverIndex >= 0 && hoverIndex < state.ingredientsInOrder.stuffing.length) {
-              const [movedIngredient] = state.ingredientsInOrder.stuffing.splice(dragIndex, 1);
-              state.ingredientsInOrder.stuffing.splice(hoverIndex, 0, movedIngredient);
+                const [movedIngredient] = state.ingredientsInOrder.stuffing.splice(dragIndex, 1);
+                state.ingredientsInOrder.stuffing.splice(hoverIndex, 0, movedIngredient);
             }
         },
         ingredientToOrderAdded: {
@@ -69,11 +76,11 @@ export const ingredientsSlice = createSlice({
         allIngredientsInOrderRemoved: (state) => {
             state.ingredientsInOrder = initialState.ingredientsInOrder;
         },
-        orderAccepted: (state) => {
-            state.order = true;
+        orderPlaced: (state, action) => {
+            state.orderData = action.payload;
         },
         orderCleared: (state) => {
-            state.order = null;
+            state.orderData = null;
         },
     },
 })
@@ -81,6 +88,6 @@ export const ingredientsSlice = createSlice({
 
 export const { modalWindowClosed, currentIngredientWasSet, currentIngredientCleared,
     ingredientToOrderAdded, ingredientFromOrderRemoved, ingredientsReordered,
-    orderAccepted } = ingredientsSlice.actions;
+    orderPlaced } = ingredientsSlice.actions;
 
 

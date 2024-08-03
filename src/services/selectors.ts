@@ -1,14 +1,16 @@
 import { createSelector } from 'reselect';
-import { normaApi } from './api';
 import { IRootState } from '../utils/store';
 
+/*
+import { normaApi } from './api';
 const selectAllIngredients = (state:IRootState) => {
     return normaApi.endpoints.getIngredients.select()(state)?.data || [];
 };
+*/
 
 export const selectIngredientsInOrder = (state:IRootState) => state.ingredients.ingredientsInOrder;
 export const selectCurrentIngredient= (state:IRootState) => state.ingredients.currentIngredient;
-export const selectOrder = (state:IRootState) => state.ingredients.order;
+export const selectOrderData = (state:IRootState) => state.ingredients.orderData;
 
 export const selectTotalOrderPrice = createSelector(
     [selectIngredientsInOrder],
@@ -27,7 +29,6 @@ export const selectIngredientAmounts = createSelector(
             return acc;
         }, amounts);
         if (used_ingredients.bun) amounts[used_ingredients.bun._id] = 2;
-        console.log("selectIngredientAmounts");
         return amounts;
     }
 )

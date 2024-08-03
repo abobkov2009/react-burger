@@ -9,8 +9,9 @@ import Modal from '../modal/modal';
 import OrderDetails from './order-details/order-details';
 
 import { ingredientType } from '../../services/types';
-import { ingredientToOrderAdded, orderAccepted } from '../../services/reducers';
-import { selectIngredientsInOrder, selectTotalOrderPrice, selectOrder } from '../../services/selectors';
+import { usePlaceOrderMutation } from '../../services/api';
+import { ingredientToOrderAdded, orderPlaced } from '../../services/reducers';
+import { selectIngredientsInOrder, selectTotalOrderPrice, selectOrderData } from '../../services/selectors';
 import { DND_BURGER_INGREDIENTS } from '../../utils/constants';
 
 import burgerConstructorStyles from './burger-constructor.module.css';
@@ -21,8 +22,8 @@ interface DropCollectedProps {
 
 export default function BurgerConstructor() {
     const dispatch = useAppDispatch();
-    
-    const order = useSelector(selectOrder);
+    const [placeOrderTriger, placeOrderResult] = usePlaceOrderMutation();
+    const orderData = useSelector(selectOrderData);
     const ingredientsInOrder = useSelector(selectIngredientsInOrder);
     const totalOrderPrice = useSelector(selectTotalOrderPrice);
 
@@ -37,8 +38,13 @@ export default function BurgerConstructor() {
         }),
     });
 
-    const onOrderSubmitButtonClick = () => {
-        dispatch(orderAccepted());
+    const onOrderSubmitButtonClick = async () => {
+        try {
+            const orderDetails = await placeOrderTriger({ingredients:[ingredientsInOrder.bun!._id, ...ingredientsInOrder.stuffing.map((ingredient) => ingredient._id)]}).unwrap();
+            dispatch(orderPlaced(orderDetails));
+        }catch(error) {
+            console.error('rejected',error )
+        }                
     }
 
     return (
@@ -86,9 +92,9 @@ export default function BurgerConstructor() {
 
             </div>
             {
-                order && (
+                orderData && (
                     <Modal>
-                        <OrderDetails orderNumber="034536" />
+                        <OrderDetails />
                     </Modal>
                 )
             }
