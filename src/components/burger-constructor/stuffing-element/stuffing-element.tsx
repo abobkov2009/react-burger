@@ -1,15 +1,15 @@
 import { useRef, useCallback } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import type { XYCoord } from 'dnd-core'
-import { useAppDispatch } from '../../../utils/hooks';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { DND_ORDER_INGREDIENTS } from "../../../utils/constants";
-import { ingredientWithUuidType } from '../../../services/types';
+import { useAppDispatch } from '../../../utils/hooks';
 import { ingredientFromOrderRemoved, ingredientsReordered } from '../../../services/reducers';
-import ingredientElementStyles from './ingredient-element.module.css';
+import { DND_ORDER_STUFFING } from "../../../utils/constants";
+import { ingredientWithUuidType } from '../../../services/types';
+import stuffingElementStyles from './stuffing-element.module.css';
 
-type IngredientElementProps = {
+type StuffingElementProps = {
     ingredient: ingredientWithUuidType;
     index: number;
 };
@@ -18,12 +18,12 @@ interface DragItem {
     index: number,
 }
 
-export default function IngredientElement({ ingredient, index }: IngredientElementProps) {
+export default function StuffingElement({ ingredient, index }: StuffingElementProps) {
     const dispatch = useAppDispatch();
     const ref = useRef<HTMLLIElement>(null)
 
     const [{ isDragging }, drag] = useDrag({
-        type: DND_ORDER_INGREDIENTS,
+        type: DND_ORDER_STUFFING,
         item: { index: index },
         collect: (monitor) => ({
             isDragging: monitor.isDragging(),
@@ -31,7 +31,7 @@ export default function IngredientElement({ ingredient, index }: IngredientEleme
     });
 
     const [, drop] = useDrop<DragItem>({
-        accept: DND_ORDER_INGREDIENTS,
+        accept: DND_ORDER_STUFFING,
         hover(item: DragItem, monitor) {
             if (!ref.current) {
                 return;
@@ -60,7 +60,7 @@ export default function IngredientElement({ ingredient, index }: IngredientEleme
     });
 
     const moveIngredient = useCallback((dragIndex: number, hoverIndex: number) => {
-        dispatch(ingredientsReordered({dragIndex, hoverIndex}));
+        dispatch(ingredientsReordered({ dragIndex, hoverIndex }));
     }, [dispatch])
 
     const handleDeleteClicked = () => {
@@ -70,8 +70,8 @@ export default function IngredientElement({ ingredient, index }: IngredientEleme
     drag(drop(ref))
 
     return (
-        <li ref={ref} className={`${ingredientElementStyles.ingredientCard} ${isDragging && ingredientElementStyles.dragging}`} key={ingredient._uuid}>
-            <div className={ingredientElementStyles.ingredientDragger}>
+        <li ref={ref} className={`${stuffingElementStyles.ingredientCard} ${isDragging && stuffingElementStyles.dragging}`} key={ingredient._uuid}>
+            <div className={stuffingElementStyles.ingredientDragger}>
                 <DragIcon type="primary" />
             </div>
             <ConstructorElement

@@ -11,6 +11,7 @@ type getResponseType = {
 type placeOrderArgsType = {
     ingredients: string[];
 }
+
 type placeOrderResponseType = {
     success: boolean;
     name: string;
@@ -44,4 +45,7 @@ export const normaApi = createApi({
     }),
 });
 
-export const { useGetIngredientsQuery, usePlaceOrderMutation } = normaApi;
+export const {
+    useGetIngredientsQuery,
+    usePlaceOrderMutation
+} = normaApi;

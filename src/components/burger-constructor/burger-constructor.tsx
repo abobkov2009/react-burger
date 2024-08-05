@@ -4,9 +4,9 @@ import { useAppDispatch } from '../../utils/hooks';
 
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import BunElement from './bun-element/bun-element';
-import IngredientElement from './ingredient-element/ingredient-element';
 import Modal from '../modal/modal';
 import OrderDetails from './order-details/order-details';
+import StuffingElement from './stuffing-element/stuffing-element';
 
 import { ingredientType } from '../../services/types';
 import { usePlaceOrderMutation } from '../../services/api';
@@ -22,7 +22,7 @@ interface DropCollectedProps {
 
 export default function BurgerConstructor() {
     const dispatch = useAppDispatch();
-    const [placeOrderTriger, placeOrderResult] = usePlaceOrderMutation();
+    const [placeOrderTriger, { isLoading }] = usePlaceOrderMutation();
     const orderData = useSelector(selectOrderData);
     const ingredientsInOrder = useSelector(selectIngredientsInOrder);
     const totalOrderPrice = useSelector(selectTotalOrderPrice);
@@ -40,11 +40,16 @@ export default function BurgerConstructor() {
 
     const onOrderSubmitButtonClick = async () => {
         try {
-            const orderDetails = await placeOrderTriger({ingredients:[ingredientsInOrder.bun!._id, ...ingredientsInOrder.stuffing.map((ingredient) => ingredient._id)]}).unwrap();
+            const ingredients = [ingredientsInOrder.bun!._id,
+            ...ingredientsInOrder.stuffing.map((ingredient) => ingredient._id),
+            ingredientsInOrder.bun!._id
+            ];
+
+            const orderDetails = await placeOrderTriger({ ingredients: ingredients }).unwrap();
             dispatch(orderPlaced(orderDetails));
-        }catch(error) {
-            console.error('rejected',error )
-        }                
+        } catch (error) {
+            console.error('rejected', error)
+        }
     }
 
     return (
@@ -58,7 +63,7 @@ export default function BurgerConstructor() {
                 </div>
                 {(ingredientsInOrder.stuffing.length !== 0)
                     ? (<ul className={`mt-4 mb-4 pl-4 custom-scroll ${burgerConstructorStyles.scrollableList}`}>
-                        {ingredientsInOrder.stuffing.map((ingredient, index) => (<IngredientElement key={ingredient._uuid} ingredient={ingredient} index={index} />))}
+                        {ingredientsInOrder.stuffing.map((ingredient, index) => (<StuffingElement key={ingredient._uuid} ingredient={ingredient} index={index} />))}
                     </ul>)
                     : (<div className="mt-4 mb-4 pr-4 ml-8">
                         <div className="constructor-element">
@@ -86,10 +91,8 @@ export default function BurgerConstructor() {
                     size="large"
                     extraClass="ml-10"
                     onClick={(onOrderSubmitButtonClick)}
-                    disabled={ingredientsInOrder.bun === null}
+                    disabled={ingredientsInOrder.bun === null || isLoading}
                 >Оформить заказ</Button>
-
-
             </div>
             {
                 orderData && (

@@ -86,8 +86,14 @@ export const ingredientsSlice = createSlice({
 })
 
 
-export const { modalWindowClosed, currentIngredientWasSet, currentIngredientCleared,
-    ingredientToOrderAdded, ingredientFromOrderRemoved, ingredientsReordered,
-    orderPlaced } = ingredientsSlice.actions;
+export const { 
+    modalWindowClosed, 
+    currentIngredientWasSet, 
+    currentIngredientCleared,
+    ingredientToOrderAdded, 
+    ingredientFromOrderRemoved, 
+    ingredientsReordered,
+    orderPlaced 
+} = ingredientsSlice.actions;
 
 
