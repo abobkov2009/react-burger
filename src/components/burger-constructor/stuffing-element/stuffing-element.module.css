@@ -1,0 +1,13 @@
+.ingredientCard {
+	padding-left: 0;
+	display: flex;
+	align-items: center;
+}
+
+.ingredientDragger {
+	width: 32px;
+}
+
+.dragging {
+	filter: opacity(0.4) grayscale(80);
+}

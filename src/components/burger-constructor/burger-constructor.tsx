@@ -1,64 +1,84 @@
-import { useMemo } from 'react';
-import { Button, ConstructorElement, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useDrop } from "react-dnd";
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from '../../utils/hooks';
 
-import { ingredientType } from '../../utils/burger-api';
+import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import BunElement from './bun-element/bun-element';
+import Modal from '../modal/modal';
+import OrderDetails from './order-details/order-details';
+import StuffingElement from './stuffing-element/stuffing-element';
+
+import { ingredientType } from '../../services/types';
+import { usePlaceOrderMutation } from '../../services/api';
+import { ingredientToOrderAdded, orderPlaced } from '../../services/reducers';
+import { selectIngredientsInOrder, selectTotalOrderPrice, selectOrderData } from '../../services/selectors';
+import { DND_BURGER_INGREDIENTS } from '../../utils/constants';
+
 import burgerConstructorStyles from './burger-constructor.module.css';
 
-type BurgerConstructorProps = {
-    ingredientsList: ingredientType[];
-    setOrderModalOpen: (b: boolean) => void;
-};
+interface DropCollectedProps {
+    isOver: boolean;
+}
 
-export default function BurgerConstructor({ ingredientsList, setOrderModalOpen }: BurgerConstructorProps) {
-    const { bun, ingredients } = useMemo(() => {
-        return {
-            bun: ingredientsList.find(ingredient => ingredient.type === 'bun'),
-            ingredients: ingredientsList.filter(ingredient => ingredient.type !== 'bun'),
-        };
-    }, [ingredientsList]);
+export default function BurgerConstructor() {
+    const dispatch = useAppDispatch();
+    const [placeOrderTriger, { isLoading }] = usePlaceOrderMutation();
+    const orderData = useSelector(selectOrderData);
+    const ingredientsInOrder = useSelector(selectIngredientsInOrder);
+    const totalOrderPrice = useSelector(selectTotalOrderPrice);
 
-    const onOrderSubmitButtonClick = () => {
-        setOrderModalOpen(true);
+
+    const [{ isOver }, dropTargetRef] = useDrop<ingredientType, void, DropCollectedProps>({
+        accept: DND_BURGER_INGREDIENTS,
+        drop(item: ingredientType) {
+            dispatch(ingredientToOrderAdded(item))
+        },
+        collect: monitor => ({
+            isOver: monitor.isOver()
+        }),
+    });
+
+    const onOrderSubmitButtonClick = async () => {
+        try {
+            const ingredients = [ingredientsInOrder.bun!._id,
+            ...ingredientsInOrder.stuffing.map((ingredient) => ingredient._id),
+            ingredientsInOrder.bun!._id
+            ];
+
+            const orderDetails = await placeOrderTriger({ ingredients: ingredients }).unwrap();
+            dispatch(orderPlaced(orderDetails));
+        } catch (error) {
+            console.error('rejected', error)
+        }
     }
-
-    const totalOrderPrice = 610;
 
     return (
         <section className={`pt-25 ml-4 ${burgerConstructorStyles.container}`}>
-            <div className='pr-4 ml-8'>
-                {bun && (<ConstructorElement
-                    type="top"
-                    isLocked={true}
-                    text={`${bun.name} (верх)`}
-                    price={bun.price}
-                    thumbnail={bun.image}
-                />)
-                }
-            </div>
-            <ul className={`mt-4 mb-4 pl-4 custom-scroll ${burgerConstructorStyles.scrollableList}`}>
-                {ingredients.map((ingredient) => (
-                    <li className={`${burgerConstructorStyles.ingredientCard}`} key={ingredient._id}>
-                        <div className={burgerConstructorStyles.ingredientDragger}>
-                            <DragIcon type="primary" />
+            <div ref={dropTargetRef} className={`${isOver ? burgerConstructorStyles.dropAreaHover : burgerConstructorStyles.dropArea}`}>
+                <div className='pr-4 ml-8'>
+                    <BunElement
+                        ingredient={ingredientsInOrder.bun}
+                        type="top"
+                    />
+                </div>
+                {(ingredientsInOrder.stuffing.length !== 0)
+                    ? (<ul className={`mt-4 mb-4 pl-4 custom-scroll ${burgerConstructorStyles.scrollableList}`}>
+                        {ingredientsInOrder.stuffing.map((ingredient, index) => (<StuffingElement key={ingredient._uuid} ingredient={ingredient} index={index} />))}
+                    </ul>)
+                    : (<div className="mt-4 mb-4 pr-4 ml-8">
+                        <div className="constructor-element">
+                            <span className={`constructor-element__row p-3 ${burgerConstructorStyles.emptyElement}`}>
+                                Добавьте ингредиенты
+                            </span>
                         </div>
-                        <ConstructorElement
-                            text={ingredient.name}
-                            price={ingredient.price}
-                            thumbnail={ingredient.image}
-                        />
-                    </li>
-                )
-                )}
-            </ul>
-            <div className='pr-4 ml-8'>
-                {bun && (<ConstructorElement
-                    type="bottom"
-                    isLocked={true}
-                    text={`${bun.name} (низ)`}
-                    price={bun.price}
-                    thumbnail={bun.image}
-                />)
+                    </div>)
                 }
+                <div className='pr-4 ml-8'>
+                    <BunElement
+                        ingredient={ingredientsInOrder.bun}
+                        type="bottom"
+                    />
+                </div>
             </div>
             <div className={`pr-4 mt-10 ${burgerConstructorStyles.footer}`}>
                 <p className="mr-2 text text_type_digits-medium">
@@ -71,8 +91,16 @@ export default function BurgerConstructor({ ingredientsList, setOrderModalOpen }
                     size="large"
                     extraClass="ml-10"
                     onClick={(onOrderSubmitButtonClick)}
+                    disabled={ingredientsInOrder.bun === null || isLoading}
                 >Оформить заказ</Button>
             </div>
-        </section>
+            {
+                orderData && (
+                    <Modal>
+                        <OrderDetails />
+                    </Modal>
+                )
+            }
+        </section >
     )
 };
