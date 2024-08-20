@@ -3,12 +3,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import { useConfirmPasswordResetMutation } from '../../services/auth';
+import { authErrorType } from '../../services/types';
 import { isPasswordResetRequested, clearPasswordResetRequested } from '../../utils/local-storage';
 import { URLS } from '../../utils/constants';
 import Modal from '../../components/modal/modal';
 import ErrorMessage from '../../components/error-message/ErrorMessage';
 
 import styles from './reset-password.module.css';
+
 
 export default function ResetPasswordPage() {
     const navigate = useNavigate();
@@ -37,7 +39,7 @@ export default function ResetPasswordPage() {
         catch (err) {
             let message = 'Неизвестная ошибка';
             if (err && typeof err === 'object' && 'data' in err) {
-                message = (err as { status: Number, data: { success: boolean; message: string; } }).data.message;
+                message = (err as authErrorType).data.message;
             }
             setErrorMessage(message);
         }

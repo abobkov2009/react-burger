@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 
 import { URLS } from '../../utils/constants';
@@ -13,10 +12,6 @@ import appStyles from './app.module.css'
 export default function App() {
     const location = useLocation();
     const background = location.state && location.state.background;
-
-    useEffect(() => {
-        location.state = null;
-    }, []);
 
     return (
         <div className={appStyles.page}>

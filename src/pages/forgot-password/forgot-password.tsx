@@ -3,12 +3,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button, EmailInput } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import { useRequestPasswordResetMutation } from '../../services/auth';
+import { authErrorType } from '../../services/types';
 import { setPasswordResetRequested } from '../../utils/local-storage';
 import { URLS } from '../../utils/constants';
 import Modal from '../../components/modal/modal';
 import ErrorMessage from '../../components/error-message/ErrorMessage';
 
 import styles from './forgot-password.module.css';
+
 
 export default function ForgotPasswordPage() {
     const navigate = useNavigate();
@@ -37,7 +39,7 @@ export default function ForgotPasswordPage() {
         catch (err) {
             let message = 'Неизвестная ошибка';
             if (err && typeof err === 'object' && 'data' in err) {
-                message = (err as { status: Number, data: { success: boolean; message: string; } }).data.message;
+                message = (err as authErrorType).data.message;
             }
             setErrorMessage(message);
         }

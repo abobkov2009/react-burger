@@ -4,12 +4,14 @@ import { Button, EmailInput, Input, PasswordInput } from "@ya.praktikum/react-de
 
 import { useRegisterUserMutation } from '../../services/auth';
 import { useFetchUserData } from '../../utils/hooks';
+import { authErrorType } from '../../services/types';
 import { saveTokensToLocalStorage } from '../../utils/local-storage';
 import { URLS } from '../../utils/constants';
 import Modal from '../../components/modal/modal';
 import ErrorMessage from '../../components/error-message/ErrorMessage';
 
 import styles from './register.module.css';
+
 
 export default function RegisterPage() {
     const navigate = useNavigate();
@@ -40,7 +42,7 @@ export default function RegisterPage() {
         catch (err) {
             let message = 'Неизвестная ошибка';
             if (err && typeof err === 'object' && 'data' in err) {
-                message = (err as { status: Number, data: { success: boolean; message: string; } }).data.message;
+                message = (err as authErrorType).data.message;
             }
             setErrorMessage(message);
         }

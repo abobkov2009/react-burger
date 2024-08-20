@@ -30,3 +30,10 @@ export type authResponseType = {
     user?: userInfoType;
 }
 
+export type authErrorType = {
+    status: Number; 
+    data: { 
+        success: boolean; 
+        message: string; 
+    };
+}
