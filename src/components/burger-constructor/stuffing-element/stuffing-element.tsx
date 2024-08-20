@@ -4,7 +4,7 @@ import type { XYCoord } from 'dnd-core'
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { useAppDispatch } from '../../../utils/hooks';
-import { ingredientFromOrderRemoved, ingredientsReordered } from '../../../services/reducers';
+import { ingredientFromOrderRemoved, ingredientsReordered } from '../../../services/order';
 import { DND_ORDER_STUFFING } from "../../../utils/constants";
 import { ingredientWithUuidType } from '../../../services/types';
 import stuffingElementStyles from './stuffing-element.module.css';

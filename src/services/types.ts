@@ -15,3 +15,18 @@ export type ingredientType = {
 
 export type ingredientWithAmountType = ingredientType & { amount: number }
 export type ingredientWithUuidType = ingredientType & { _uuid?: string }
+
+
+export type userInfoType = {
+    email: string;
+    name: string;
+}
+
+export type authResponseType = {
+    success: boolean;
+    message?: string;
+    accessToken?: string;
+    refreshToken?: string;
+    user?: userInfoType;
+}
+

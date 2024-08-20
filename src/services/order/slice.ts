@@ -2,11 +2,10 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
 import uuid from 'react-uuid';
-import { ingredientType, ingredientWithUuidType } from './types';
+import { ingredientType, ingredientWithUuidType } from '../types';
+import { orderApi } from './api';
 
-export interface IngredientsState {
-    currentIngredient: ingredientType | null,
-
+export interface OrderState {
     ingredientsInOrder: {
         bun: ingredientWithUuidType | null,
         stuffing: ingredientWithUuidType[],
@@ -20,9 +19,7 @@ export interface IngredientsState {
     } | null
 }
 
-const initialState: IngredientsState = {
-    currentIngredient: null,
-
+const initialState: OrderState = {
     ingredientsInOrder: {
         bun: null,
         stuffing: [],
@@ -31,21 +28,14 @@ const initialState: IngredientsState = {
 };
 
 
-export const ingredientsSlice = createSlice({
-    name: 'ingredients',
+export const orderSlice = createSlice({
+    name: 'order',
     initialState,
+    selectors: {
+        selectIngredientsInOrder: state => state.ingredientsInOrder,
+        selectOrderData: state => state.orderData,
+    },
     reducers: {
-        modalWindowClosed: (state) => {
-            if (state.orderData!=null) state.ingredientsInOrder = initialState.ingredientsInOrder;
-            state.currentIngredient = null;
-            state.orderData = null;
-        },
-        currentIngredientWasSet: (state, action: PayloadAction<ingredientType>) => {
-            state.currentIngredient = action.payload;
-        },
-        currentIngredientCleared: (state) => {
-            state.currentIngredient = null;
-        },
         ingredientsReordered: (state, action) => {
             const { dragIndex, hoverIndex } = action.payload;
             if (dragIndex >= 0 && dragIndex < state.ingredientsInOrder.stuffing.length &&
@@ -81,19 +71,30 @@ export const ingredientsSlice = createSlice({
         },
         orderCleared: (state) => {
             state.orderData = null;
+            state.ingredientsInOrder = initialState.ingredientsInOrder;
         },
     },
+    extraReducers: (builder) => {
+        builder
+            .addMatcher(orderApi.endpoints.placeOrder.matchFulfilled, (state, action) => {
+                if (action.payload && action.payload.success) {
+                    state.orderData = action.payload;
+                }
+            })
+    }
 })
 
 
-export const { 
-    modalWindowClosed, 
-    currentIngredientWasSet, 
-    currentIngredientCleared,
-    ingredientToOrderAdded, 
-    ingredientFromOrderRemoved, 
+export const {
+    ingredientToOrderAdded,
+    ingredientFromOrderRemoved,
     ingredientsReordered,
-    orderPlaced 
-} = ingredientsSlice.actions;
+    orderPlaced,
+    orderCleared,
+} = orderSlice.actions;
 
+export const {
+    selectIngredientsInOrder,
+    selectOrderData,
+} = orderSlice.getSelectors();
 

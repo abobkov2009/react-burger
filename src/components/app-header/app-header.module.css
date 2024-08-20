@@ -15,11 +15,21 @@
 	gap: 8px;
 }
 
+.navitem {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.activecaption {
+    color: #F2F2F3;
+}
+
 .logo {
 	position: absolute;
 	width: 290px;
 	height: 50px;
-	top: 20px;
+	top: 22px;
 	left: 0;
 	right: 0;
 	margin: auto;

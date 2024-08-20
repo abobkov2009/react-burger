@@ -1,23 +1,26 @@
 import { useDrag } from "react-dnd"
-import { useAppDispatch } from '../../../utils/hooks';
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { ingredientWithAmountType } from '../../../services/types';
-import { currentIngredientWasSet } from '../../../services/reducers';
-import { DND_BURGER_INGREDIENTS } from '../../../utils/constants';
+import { DND_BURGER_INGREDIENTS, URLS } from '../../../utils/constants';
 
 import ingredientCardStyles from './ingredient-card.module.css';
+
 
 type IngredientCardProps = {
     ingredient: ingredientWithAmountType;
 };
 
 export default function IngredientCard({ ingredient }: IngredientCardProps) {
-    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const handleOnClick = () => {
-        dispatch(currentIngredientWasSet(ingredient));
+        navigate(URLS.INGREDIENTS_ID.replace(':ingredient_id', ingredient._id), {
+            state: { background: location },
+        });
     }
 
     const [{ isDragging }, dragRef] = useDrag({
