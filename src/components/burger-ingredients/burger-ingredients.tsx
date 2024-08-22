@@ -1,32 +1,18 @@
-import { useMemo, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import AlertMessage from '../alert-message/AlertMessage';
 import IngredientsTabs from './ingredients-tabs/ingredients-tabs';
 import IngredientsGroup from './ingredients-group/ingredients-group';
-import IngredientDetails from './ingredient-details/ingredient-details';
-import Modal from '../modal/modal';
 
-import { useGetIngredientsQuery } from '../../services/api';
-import { selectCurrentIngredient, selectIngredientAmounts } from '../../services/selectors';
+import { useGetIngredientsQuery, selectIngredientsGroupedByCategoryMergedWithAmounts } from '../../services/ingredients';
 
 import burgerIngridientsStyles from './burger-ingredients.module.css';
 
 export default function BurgerIngredients() {
-    const { data: ingredientsList, error, isLoading } = useGetIngredientsQuery();
-
-    //const ingredientsByCategories = useSelector(selectIngredientsGroupeByCategoryMergedWithAmounts);
-    const currentIngredient = useSelector(selectCurrentIngredient);
-    const ingedientsAmounts = useSelector(selectIngredientAmounts);
-    
-    const ingredientsByCategories = useMemo(()=> {return {
-            buns: ingredientsList?.filter(ingredient => ingredient.type === 'bun').map(ingredient => { return { ...ingredient, amount: ingedientsAmounts[ingredient._id] | 0 } }),
-            sauces: ingredientsList?.filter(ingredient => ingredient.type === 'sauce').map(ingredient => { return { ...ingredient, amount: ingedientsAmounts[ingredient._id] | 0 } }),
-            mains: ingredientsList?.filter(ingredient => ingredient.type === 'main').map(ingredient => { return { ...ingredient, amount: ingedientsAmounts[ingredient._id] | 0 } }),        
-        }}, [ingredientsList, ingedientsAmounts]
-    )
-    
-
+    const { error, isLoading } = useGetIngredientsQuery();
+    const ingredientsByCategories = useSelector(selectIngredientsGroupedByCategoryMergedWithAmounts);
+   
     const [selectedCategory, setSelectedCategory] = useState('buns');
 
     const bunsRef = useRef<HTMLLIElement>(null);
@@ -76,11 +62,6 @@ export default function BurgerIngredients() {
                         {ingredientsByCategories.mains && <IngredientsGroup ref={mainsRef} ingredientsList={ingredientsByCategories.mains} groupName='Начинки' />}
                     </ul>
                 </>)
-            }
-            {currentIngredient && (
-                <Modal>
-                    <IngredientDetails />
-                </Modal>)
             }
         </section>
     )

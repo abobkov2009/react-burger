@@ -1,20 +1,27 @@
 import { useDrop } from "react-dnd";
 import { useSelector } from 'react-redux';
+import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from '../../utils/hooks';
 
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import BunElement from './bun-element/bun-element';
+import Loader from "../loader/loader";
 import Modal from '../modal/modal';
 import OrderDetails from './order-details/order-details';
 import StuffingElement from './stuffing-element/stuffing-element';
 
 import { ingredientType } from '../../services/types';
-import { usePlaceOrderMutation } from '../../services/api';
-import { ingredientToOrderAdded, orderPlaced } from '../../services/reducers';
-import { selectIngredientsInOrder, selectTotalOrderPrice, selectOrderData } from '../../services/selectors';
-import { DND_BURGER_INGREDIENTS } from '../../utils/constants';
+import { useFetchUserData } from '../../hooks';
+import {
+    selectIngredientsInOrder, selectTotalOrderPrice, selectOrderData,
+    usePlaceOrderMutation,
+    ingredientToOrderAdded, orderCleared
+} from '../../services/order';
+
+import { DND_BURGER_INGREDIENTS, URLS } from '../../utils/constants';
 
 import burgerConstructorStyles from './burger-constructor.module.css';
+
 
 interface DropCollectedProps {
     isOver: boolean;
@@ -22,10 +29,13 @@ interface DropCollectedProps {
 
 export default function BurgerConstructor() {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+    const { data: userInfo } = useFetchUserData();
     const [placeOrderTriger, { isLoading }] = usePlaceOrderMutation();
-    const orderData = useSelector(selectOrderData);
+
     const ingredientsInOrder = useSelector(selectIngredientsInOrder);
     const totalOrderPrice = useSelector(selectTotalOrderPrice);
+    const orderData = useSelector(selectOrderData);
 
 
     const [{ isOver }, dropTargetRef] = useDrop<ingredientType, void, DropCollectedProps>({
@@ -38,18 +48,26 @@ export default function BurgerConstructor() {
         }),
     });
 
-    const onOrderSubmitButtonClick = async () => {
-        try {
-            const ingredients = [ingredientsInOrder.bun!._id,
-            ...ingredientsInOrder.stuffing.map((ingredient) => ingredient._id),
-            ingredientsInOrder.bun!._id
-            ];
 
-            const orderDetails = await placeOrderTriger({ ingredients: ingredients }).unwrap();
-            dispatch(orderPlaced(orderDetails));
-        } catch (error) {
-            console.error('rejected', error)
+    const onOrderSubmitButtonClick = async () => {
+        if (!userInfo) {
+            navigate(URLS.LOGIN, { state: { from: URLS.HOMEPAGE } });
+        } else {
+            try {
+                const ingredients = [ingredientsInOrder.bun!._id,
+                ...ingredientsInOrder.stuffing.map((ingredient) => ingredient._id),
+                ingredientsInOrder.bun!._id
+                ];
+
+                await placeOrderTriger({ ingredients: ingredients }).unwrap();
+            } catch (error) {
+                console.error('rejected', error)
+            }
         }
+    }
+
+    const onModalClose = () => {
+        if (orderData != null) dispatch(orderCleared());
     }
 
     return (
@@ -95,9 +113,12 @@ export default function BurgerConstructor() {
                 >Оформить заказ</Button>
             </div>
             {
-                orderData && (
-                    <Modal>
-                        <OrderDetails />
+                (isLoading || orderData != null) && (
+                    <Modal onModalClose={onModalClose}>
+                        {isLoading
+                            ? (<Loader message="Ваш заказ обрабатывается" />)
+                            : (<OrderDetails />)
+                        }
                     </Modal>
                 )
             }

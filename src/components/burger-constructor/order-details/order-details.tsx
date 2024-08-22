@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { selectOrderData } from '../../../services/selectors';
+import { selectOrderData } from '../../../services/order';
 
 import orderDetailsStyles from './order-details.module.css';
 import orderDetailsImage from '../../../images/order-detail.png'

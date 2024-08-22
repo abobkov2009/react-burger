@@ -1,0 +1,30 @@
+.mainContent {
+    height: 75%;
+    width: 100%;
+    margin-top: 150px;
+    display: flex;
+    justify-content: center;
+}
+
+.navmenu {
+    width: 320px;    
+    display: flex;
+    flex-direction: column;  
+}
+
+.navLink {
+    width: 320px;
+    height: 64px;
+    text-decoration: none;
+    display: flex;    
+    align-items: center;
+}
+
+.navLink:hover {
+    color: #F2F2F3;
+}
+
+.outletdiv {
+    width: 480px;    
+}
+

@@ -1,20 +1,22 @@
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import ReactDOM from 'react-dom';
+import { useNavigate } from 'react-router-dom';
+
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import modalStyles from './modal.module.css';
-import { modalWindowClosed } from '../../services/reducers';
+
 
 type ModalProps = {
+    onModalClose?: () => void;
     children: React.ReactElement;
 };
 
 const modalRoot = document.getElementById("modal-window") as HTMLDivElement;
 
-export default function Modal({ children }: ModalProps) {
-    const dispatch = useDispatch();
+export default function Modal({ onModalClose, children }: ModalProps) {
+    const navigate = useNavigate();
 
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -31,7 +33,7 @@ export default function Modal({ children }: ModalProps) {
     }, []);
 
     const closeModalWindow = () => {
-        dispatch(modalWindowClosed());
+        onModalClose ? onModalClose() : navigate(-1);
     }
 
     return ReactDOM.createPortal(
