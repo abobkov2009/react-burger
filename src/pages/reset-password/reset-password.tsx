@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import { useConfirmPasswordResetMutation } from '../../services/auth';
+import { useForm } from '../../hooks';
 import { authErrorType } from '../../services/types';
 import { isPasswordResetRequested, clearPasswordResetRequested } from '../../utils/local-storage';
 import { URLS } from '../../utils/constants';
@@ -12,22 +13,26 @@ import ErrorMessage from '../../components/error-message/ErrorMessage';
 import styles from './reset-password.module.css';
 
 
+interface IFormValues {
+    password: string;
+    token: string;
+}
+
+
 export default function ResetPasswordPage() {
     const navigate = useNavigate();
 
     const [confirmResetTriger] = useConfirmPasswordResetMutation();
 
-    const [form, setFormValue] = useState({ password: '', token: '' });
-    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setFormValue({ ...form, [e.target.name]: e.target.value });
-    }
+    const { formValues, handleFormChange } = useForm<IFormValues>({ password: '', token: '' });
+
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     const onFormSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            if (form.password?.length !== 0 && form.token?.length !== 0) {
-                const resetResult = await confirmResetTriger(form).unwrap();
+            if (formValues.password.length !== 0 && formValues.token.length !== 0) {
+                const resetResult = await confirmResetTriger(formValues).unwrap();
                 if (resetResult.success) {
                     clearPasswordResetRequested();
                     navigate(URLS.LOGIN, { replace: true });
@@ -37,11 +42,7 @@ export default function ResetPasswordPage() {
             }
         }
         catch (err) {
-            let message = 'Неизвестная ошибка';
-            if (err && typeof err === 'object' && 'data' in err) {
-                message = (err as authErrorType).data.message;
-            }
-            setErrorMessage(message);
+            setErrorMessage((err && typeof err === 'object' && 'data' in err) ? (err as authErrorType).data.message : 'Неизвестная ошибка');
         }
     };
 
@@ -55,8 +56,8 @@ export default function ResetPasswordPage() {
         <main className={styles.mainContent}>
             <h2 className='text text_type_main-medium mb-6'>Восстановление пароля</h2>
             <form className={styles.form} onSubmit={onFormSubmit}>
-                <PasswordInput name='password' value={form.password ?? ""} placeholder='Введите новый пароль' onChange={onChange} required extraClass='mb-6' />
-                <Input type='text' name='token' value={form.token ?? ""} placeholder='Введите код из письма' onChange={onChange} extraClass='mb-6' />
+                <PasswordInput name='password' value={formValues.password ?? ""} placeholder='Введите новый пароль' onChange={handleFormChange} required extraClass='mb-6' />
+                <Input type='text' name='token' value={formValues.token ?? ""} placeholder='Введите код из письма' onChange={handleFormChange} extraClass='mb-6' />
                 <Button htmlType='submit' type='primary' size='medium' extraClass='mb-20'>Сохранить</Button>
             </form>
             <div className={`mb-4 ${styles.flexrow}`}>

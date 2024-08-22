@@ -1,7 +1,7 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { BurgerIcon, ListIcon, Logo, ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import { useFetchUserData } from '../../utils/hooks';
+import { useFetchUserData } from '../../hooks';
 import { URLS } from "../../utils/constants";
 import headerStyles from './app-header.module.css'
 
@@ -11,9 +11,9 @@ export default function AppHeader() {
 
     return (
         <header className={headerStyles.header}>
-            <div className={headerStyles.logo}>
+            <Link to={URLS.HOMEPAGE} className={headerStyles.logo}>
                 <Logo />
-            </div>
+            </Link>
             <nav className={`pt-4 pb-4 ${headerStyles.navigation}`}>
                 <div className={headerStyles.navcontainer}>
                     <NavLink className={`p-5 ${headerStyles.navitem}`} to={URLS.HOMEPAGE}>

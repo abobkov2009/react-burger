@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { Button, EmailInput } from "@ya.praktikum/react-developer-burger-ui-components";
 
+import { useForm } from '../../hooks';
 import { useRequestPasswordResetMutation } from '../../services/auth';
 import { authErrorType } from '../../services/types';
 import { setPasswordResetRequested } from '../../utils/local-storage';
@@ -12,22 +13,24 @@ import ErrorMessage from '../../components/error-message/ErrorMessage';
 import styles from './forgot-password.module.css';
 
 
+interface IFormValues {
+    email: string;
+}
+
 export default function ForgotPasswordPage() {
     const navigate = useNavigate();
 
     const [resetPasswordTriger] = useRequestPasswordResetMutation();
 
-    const [email, setEmail] = useState('');
-    const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setEmail(e.target.value);
-    }
+    const { formValues, handleFormChange } = useForm<IFormValues>({ email: '' });
+
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     const onFormSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            if (email.length !== 0) {
-                const resetResult = await resetPasswordTriger({ email }).unwrap();
+            if (formValues.email.length !== 0) {
+                const resetResult = await resetPasswordTriger(formValues).unwrap();
                 if (resetResult.success) {
                     setPasswordResetRequested();
                     navigate(URLS.RESET_PASSWORD);
@@ -37,11 +40,7 @@ export default function ForgotPasswordPage() {
             }
         }
         catch (err) {
-            let message = 'Неизвестная ошибка';
-            if (err && typeof err === 'object' && 'data' in err) {
-                message = (err as authErrorType).data.message;
-            }
-            setErrorMessage(message);
+            setErrorMessage((err && typeof err === 'object' && 'data' in err) ? (err as authErrorType).data.message : 'Неизвестная ошибка');
         }
     }
 
@@ -49,7 +48,7 @@ export default function ForgotPasswordPage() {
         <main className={styles.mainContent}>
             <h2 className='text text_type_main-medium mb-6'>Восстановление пароля</h2>
             <form className={styles.form} onSubmit={onFormSubmit}>
-                <EmailInput name='email' value={email ?? ""} onChange={onEmailChange} placeholder='Укажите e-mail' required extraClass='mb-6' />
+                <EmailInput name='email' value={formValues.email ?? ""} onChange={handleFormChange} placeholder='Укажите e-mail' required extraClass='mb-6' />
                 <Button htmlType='submit' type='primary' size='medium' extraClass='mb-20'>Восстановить</Button>
             </form>
             <div className={`mb-4 ${styles.flexrow}`}>

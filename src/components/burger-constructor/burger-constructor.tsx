@@ -11,7 +11,7 @@ import OrderDetails from './order-details/order-details';
 import StuffingElement from './stuffing-element/stuffing-element';
 
 import { ingredientType } from '../../services/types';
-import { useFetchUserData } from '../../utils/hooks';
+import { useFetchUserData } from '../../hooks';
 import {
     selectIngredientsInOrder, selectTotalOrderPrice, selectOrderData,
     usePlaceOrderMutation,

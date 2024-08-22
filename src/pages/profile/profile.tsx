@@ -17,7 +17,7 @@ export default function ProfilePage() {
             try {
                 const logoutResult = await logoutUserTriger({ token: refreshToken }).unwrap();
                 if (logoutResult.success) {
-                    clearTokensInLocalStorage();                    
+                    clearTokensInLocalStorage();
                 }
             }
             catch (err) {

@@ -2,7 +2,7 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 
 import { URLS } from '../../utils/constants';
 import AppHeader from '../app-header/app-header';
-import ProtectedRouteElement from '../protected-route-element/protected-route-element';
+import { OnlyAuth, OnlyUnAuth } from '../protected-route/protected-route';
 
 import { ForgotPasswordPage, HomePage, IngredientPage, LoginPage, NotfoundPage, ProfilePage, RegisterPage, ResetPasswordPage, UserInfoPage, OrderHistoryPage } from '../../pages';
 import Modal from '../modal/modal';
@@ -18,13 +18,15 @@ export default function App() {
             <AppHeader />
             <Routes location={background || location}>
                 <Route path={URLS.HOMEPAGE} element={<HomePage />} />
-                <Route path={URLS.LOGIN} element={<LoginPage />} />
-                <Route path={URLS.REGISTER} element={<RegisterPage />} />
-                <Route path={URLS.FORGOT_PASSWORD} element={<ForgotPasswordPage />} />
-                <Route path={URLS.RESET_PASSWORD} element={<ResetPasswordPage />} />
-                <Route path={URLS.INGREDIENTS_ID} element={<IngredientPage />} />
                 <Route path={URLS.NOT_FOUND} element={<NotfoundPage />} />
-                <Route path={URLS.PROFILE} element={<ProtectedRouteElement element={<ProfilePage />} />} >
+                <Route path={URLS.INGREDIENTS_ID} element={<IngredientPage />} />
+
+                <Route path={URLS.LOGIN} element={<OnlyUnAuth component={<LoginPage />} />} />
+                <Route path={URLS.REGISTER} element={<OnlyUnAuth component={<RegisterPage />} />} />
+                <Route path={URLS.FORGOT_PASSWORD} element={<OnlyUnAuth component={<ForgotPasswordPage />} />} />
+                <Route path={URLS.RESET_PASSWORD} element={<OnlyUnAuth component={<ResetPasswordPage />} />} />
+                                
+                <Route path={URLS.PROFILE} element={<OnlyAuth component={<ProfilePage />} />} >
                     <Route index element={<UserInfoPage />} />
                     <Route path={URLS.PROFILE_ORDERS} element={<OrderHistoryPage />} />
                 </Route>
