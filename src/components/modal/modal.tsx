@@ -8,14 +8,14 @@ import ModalOverlay from '../modal-overlay/modal-overlay';
 import modalStyles from './modal.module.css';
 
 
-type ModalProps = {
+type TModalProps = {
     onModalClose?: () => void;
     children: React.ReactElement;
 };
 
 const modalRoot = document.getElementById("modal-window") as HTMLDivElement;
 
-export default function Modal({ onModalClose, children }: ModalProps) {
+const Modal: React.FC<TModalProps> = ({ onModalClose, children }) => {
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -50,3 +50,5 @@ export default function Modal({ onModalClose, children }: ModalProps) {
         , modalRoot
     )
 };
+
+export default Modal;

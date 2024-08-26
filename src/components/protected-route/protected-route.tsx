@@ -2,12 +2,12 @@ import { Navigate, useLocation } from 'react-router-dom';
 import { useFetchUserData } from '../../hooks';
 import { URLS } from '../../utils/constants';
 
-type ProtectedRouteProps = {
+type TProtectedRouteProps = {
     onlyUnAuth?: boolean;
     component: React.ReactElement;
 };
 
-const ProtectedRoute = ({ onlyUnAuth = false, component }: ProtectedRouteProps) => {
+const ProtectedRoute = ({ onlyUnAuth = false, component }: TProtectedRouteProps) => {
     const location = useLocation();
     const { data: userInfo, isLoading } = useFetchUserData();
 
@@ -27,10 +27,10 @@ const ProtectedRoute = ({ onlyUnAuth = false, component }: ProtectedRouteProps) 
     return component;
 }
 
-type OnlyUnAuthProps = {
+type TOnlyUnAuthProps = {
     component: React.ReactElement;
 };
 
-export const OnlyUnAuth = ({ component }: OnlyUnAuthProps) => <ProtectedRoute onlyUnAuth={true} component={component} />;
+export const OnlyUnAuth = ({ component }: TOnlyUnAuthProps) => <ProtectedRoute onlyUnAuth={true} component={component} />;
 
 export const OnlyAuth = ProtectedRoute;

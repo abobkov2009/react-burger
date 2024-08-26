@@ -1,11 +1,13 @@
 import modalOverlayStyles from './modal-overlay.module.css';
 
-type ModalOverlayProps = {
+type TModalOverlayProps = {
     onCloseModalClick: () => void;
 };
 
-export default function ModalOverlay({ onCloseModalClick }: ModalOverlayProps) {
+const ModalOverlay: React.FC<TModalOverlayProps> = ({ onCloseModalClick }) => {
     return (
         <div className={modalOverlayStyles.modalOverlay} onClick={onCloseModalClick}></div>
     )
 };
+
+export default ModalOverlay;

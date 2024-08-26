@@ -4,7 +4,7 @@ import { Button, EmailInput, PasswordInput } from "@ya.praktikum/react-developer
 
 import { useLoginUserMutation } from '../../services/auth';
 import { useForm } from '../../hooks';
-import { authErrorType } from '../../services/types';
+import { TAuthError } from '../../services/types';
 import { saveTokensToLocalStorage } from '../../utils/local-storage';
 import { URLS } from '../../utils/constants';
 import Modal from '../../components/modal/modal';
@@ -13,18 +13,18 @@ import ErrorMessage from '../../components/error-message/ErrorMessage';
 import styles from './login.module.css';
 
 
-interface IFormValues {
+type TFormValues = {
     email: string;
     password: string;
 }
 
-export default function LoginPage() {
+const LoginPage = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
     const [loginUserTriger] = useLoginUserMutation();
 
-    const { formValues, handleFormChange } = useForm<IFormValues>({ email: '', password: '' });
+    const { formValues, handleFormChange } = useForm<TFormValues>({ email: '', password: '' });
 
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const onFormSubmit = async (e: React.FormEvent) => {
@@ -41,7 +41,7 @@ export default function LoginPage() {
             }
         }
         catch (err) {
-            setErrorMessage((err && typeof err === 'object' && 'data' in err) ? (err as authErrorType).data.message : 'Неизвестная ошибка');
+            setErrorMessage((err && typeof err === 'object' && 'data' in err) ? (err as TAuthError).data.message : 'Неизвестная ошибка');
         }
     }
 
@@ -69,3 +69,5 @@ export default function LoginPage() {
         </main>
     )
 };
+
+export default LoginPage;

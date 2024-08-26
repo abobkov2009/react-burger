@@ -9,10 +9,10 @@ import { useGetIngredientsQuery, selectIngredientsGroupedByCategoryMergedWithAmo
 
 import burgerIngridientsStyles from './burger-ingredients.module.css';
 
-export default function BurgerIngredients() {
+const BurgerIngredients = () => {
     const { error, isLoading } = useGetIngredientsQuery();
     const ingredientsByCategories = useSelector(selectIngredientsGroupedByCategoryMergedWithAmounts);
-   
+
     const [selectedCategory, setSelectedCategory] = useState('buns');
 
     const bunsRef = useRef<HTMLLIElement>(null);
@@ -51,7 +51,7 @@ export default function BurgerIngredients() {
     return (
         <section className={`pt-10 ml-5 mr-10 ${burgerIngridientsStyles.container}`}>
             {isLoading && (<AlertMessage header="Идет загрузка списка ингредиентов" />)}
-            {error && (<AlertMessage header="Произошла ошибка при загрузке списка ингредиентов..."/>)}
+            {error && (<AlertMessage header="Произошла ошибка при загрузке списка ингредиентов..." />)}
             {!isLoading && !error && (
                 <>
                     <h1 className="text text_type_main-large mb-5">Соберите бургер</h1>
@@ -66,3 +66,5 @@ export default function BurgerIngredients() {
         </section>
     )
 };
+
+export default BurgerIngredients;

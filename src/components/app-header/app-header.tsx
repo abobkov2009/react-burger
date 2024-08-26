@@ -5,8 +5,7 @@ import { useFetchUserData } from '../../hooks';
 import { URLS } from "../../utils/constants";
 import headerStyles from './app-header.module.css'
 
-
-export default function AppHeader() {
+const AppHeader = () => {
     const { data: userInfo } = useFetchUserData();
 
     return (
@@ -47,3 +46,5 @@ export default function AppHeader() {
         </header>
     )
 };
+
+export default AppHeader;

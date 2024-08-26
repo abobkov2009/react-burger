@@ -4,8 +4,7 @@ import { selectOrderData } from '../../../services/order';
 import orderDetailsStyles from './order-details.module.css';
 import orderDetailsImage from '../../../images/order-detail.png'
 
-
-export default function OrderDetails() {
+const OrderDetails = () => {
     const orderData = useSelector(selectOrderData);
 
     return (
@@ -18,3 +17,5 @@ export default function OrderDetails() {
         </div>
     )
 };
+
+export default OrderDetails;

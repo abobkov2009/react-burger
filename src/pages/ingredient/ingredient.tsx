@@ -2,10 +2,12 @@ import IngredientDetails from '../../components/ingredient-details/ingredient-de
 
 import styles from './ingredient.module.css';
 
-export default function IngredientPage() {
+const IngredientPage = () => {
     return (
         <main className={`${styles.mainContent}`}>
             <IngredientDetails />
         </main>
     )
 };
+
+export default IngredientPage;

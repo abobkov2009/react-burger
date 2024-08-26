@@ -3,23 +3,23 @@ import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-component
 
 import { useUpdateUserInfoMutation } from '../../../services/auth';
 import { useFetchUserData, useForm } from '../../../hooks';
-import { authErrorType } from '../../../services/types';
+import { TAuthError } from '../../../services/types';
 import Modal from '../../../components/modal/modal';
 import ErrorMessage from '../../../components/error-message/ErrorMessage';
 import styles from './user-info.module.css';
 
-interface IFormValues {
+interface TFormValues {
     name: string;
     email: string;
     password: string;
 }
 
 
-export default function UserInfoPage() {
+const UserInfoPage = () => {
     const { data: userInfo } = useFetchUserData();
     const [updateUserTrigger] = useUpdateUserInfoMutation();
 
-    const { formValues, valuesWasChanged, handleFormChange, setFormValues } = useForm<IFormValues>({ name: '', email: '', password: '' });
+    const { formValues, valuesWasChanged, handleFormChange, setFormValues } = useForm<TFormValues>({ name: '', email: '', password: '' });
 
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -41,7 +41,7 @@ export default function UserInfoPage() {
             }
         }
         catch (err) {
-            setErrorMessage((err && typeof err === 'object' && 'data' in err) ? (err as authErrorType).data.message : 'Неизвестная ошибка');
+            setErrorMessage((err && typeof err === 'object' && 'data' in err) ? (err as TAuthError).data.message : 'Неизвестная ошибка');
         }
     }
 
@@ -74,3 +74,5 @@ export default function UserInfoPage() {
         </form>
     )
 };
+
+export default UserInfoPage;

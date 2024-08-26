@@ -4,7 +4,7 @@ import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burg
 
 import { useConfirmPasswordResetMutation } from '../../services/auth';
 import { useForm } from '../../hooks';
-import { authErrorType } from '../../services/types';
+import { TAuthError } from '../../services/types';
 import { isPasswordResetRequested, clearPasswordResetRequested } from '../../utils/local-storage';
 import { URLS } from '../../utils/constants';
 import Modal from '../../components/modal/modal';
@@ -13,18 +13,18 @@ import ErrorMessage from '../../components/error-message/ErrorMessage';
 import styles from './reset-password.module.css';
 
 
-interface IFormValues {
+interface TFormValues {
     password: string;
     token: string;
 }
 
 
-export default function ResetPasswordPage() {
+const ResetPasswordPage = () => {
     const navigate = useNavigate();
 
     const [confirmResetTriger] = useConfirmPasswordResetMutation();
 
-    const { formValues, handleFormChange } = useForm<IFormValues>({ password: '', token: '' });
+    const { formValues, handleFormChange } = useForm<TFormValues>({ password: '', token: '' });
 
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -42,7 +42,7 @@ export default function ResetPasswordPage() {
             }
         }
         catch (err) {
-            setErrorMessage((err && typeof err === 'object' && 'data' in err) ? (err as authErrorType).data.message : 'Неизвестная ошибка');
+            setErrorMessage((err && typeof err === 'object' && 'data' in err) ? (err as TAuthError).data.message : 'Неизвестная ошибка');
         }
     };
 
@@ -72,3 +72,5 @@ export default function ResetPasswordPage() {
         </main>
     )
 };
+
+export default ResetPasswordPage;

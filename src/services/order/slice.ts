@@ -2,13 +2,13 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
 import uuid from 'react-uuid';
-import { ingredientType, ingredientWithUuidType } from '../types';
+import { TIngredient, TIngredientWithUuid } from '../types';
 import { orderApi } from './api';
 
-export interface OrderState {
+export type OrderState = {
     ingredientsInOrder: {
-        bun: ingredientWithUuidType | null,
-        stuffing: ingredientWithUuidType[],
+        bun: TIngredientWithUuid | null,
+        stuffing: TIngredientWithUuid[],
     },
     orderData: {
         name: string,
@@ -45,18 +45,18 @@ export const orderSlice = createSlice({
             }
         },
         ingredientToOrderAdded: {
-            reducer: (state, action: PayloadAction<ingredientType>) => {
+            reducer: (state, action: PayloadAction<TIngredient>) => {
                 if (action.payload.type === "bun") {
                     state.ingredientsInOrder.bun = action.payload;
                 } else {
                     state.ingredientsInOrder.stuffing.push(action.payload);
                 }
             },
-            prepare: (ingredient: ingredientType) => {
+            prepare: (ingredient: TIngredient) => {
                 return { payload: { ...ingredient, _uuid: uuid() } }
             },
         },
-        ingredientFromOrderRemoved: (state, action: PayloadAction<ingredientWithUuidType>) => {
+        ingredientFromOrderRemoved: (state, action: PayloadAction<TIngredientWithUuid>) => {
             if (action.payload.type === "bun") {
                 state.ingredientsInOrder.bun = null;
             } else {

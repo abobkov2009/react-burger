@@ -1,15 +1,15 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
 
 import { URLS } from '../../utils/constants';
-import AppHeader from '../app-header/app-header';
 import { OnlyAuth, OnlyUnAuth } from '../protected-route/protected-route';
 
 import { ForgotPasswordPage, HomePage, IngredientPage, LoginPage, NotfoundPage, ProfilePage, RegisterPage, ResetPasswordPage, UserInfoPage, OrderHistoryPage } from '../../pages';
+import AppHeader from '../app-header/app-header';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import appStyles from './app.module.css'
 
-export default function App() {
+const App = () => {
     const location = useLocation();
     const background = location.state && location.state.background;
 
@@ -25,7 +25,7 @@ export default function App() {
                 <Route path={URLS.REGISTER} element={<OnlyUnAuth component={<RegisterPage />} />} />
                 <Route path={URLS.FORGOT_PASSWORD} element={<OnlyUnAuth component={<ForgotPasswordPage />} />} />
                 <Route path={URLS.RESET_PASSWORD} element={<OnlyUnAuth component={<ResetPasswordPage />} />} />
-                                
+
                 <Route path={URLS.PROFILE} element={<OnlyAuth component={<ProfilePage />} />} >
                     <Route index element={<UserInfoPage />} />
                     <Route path={URLS.PROFILE_ORDERS} element={<OrderHistoryPage />} />
@@ -46,3 +46,4 @@ export default function App() {
     )
 };
 
+export default App;

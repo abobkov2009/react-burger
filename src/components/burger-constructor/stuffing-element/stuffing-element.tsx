@@ -6,19 +6,19 @@ import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burg
 import { useAppDispatch } from '../../../utils/hooks';
 import { ingredientFromOrderRemoved, ingredientsReordered } from '../../../services/order';
 import { DND_ORDER_STUFFING } from "../../../utils/constants";
-import { ingredientWithUuidType } from '../../../services/types';
+import { TIngredientWithUuid } from '../../../services/types';
 import stuffingElementStyles from './stuffing-element.module.css';
 
-type StuffingElementProps = {
-    ingredient: ingredientWithUuidType;
+type TStuffingElementProps = {
+    ingredient: TIngredientWithUuid;
     index: number;
 };
 
-interface DragItem {
+type DragItem = {
     index: number,
 }
 
-export default function StuffingElement({ ingredient, index }: StuffingElementProps) {
+const StuffingElement: React.FC<TStuffingElementProps> = ({ ingredient, index }) => {
     const dispatch = useAppDispatch();
     const ref = useRef<HTMLLIElement>(null)
 
@@ -83,3 +83,5 @@ export default function StuffingElement({ ingredient, index }: StuffingElementPr
         </li>
     )
 };
+
+export default StuffingElement

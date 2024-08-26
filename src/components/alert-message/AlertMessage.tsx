@@ -1,9 +1,9 @@
-type AlertMessageProps = {
+type TAlertMessageProps = {
     header?: string;
     message?: string;
 };
 
-export default function AlertMessage({ header, message }: AlertMessageProps) {
+const AlertMessage: React.FC<TAlertMessageProps> = ({ header, message }) => {
     return (
         <div className='pt-15'>
             {header && (<h1 className="text text_type_main-large mb-3">{header}</h1>)}
@@ -11,3 +11,5 @@ export default function AlertMessage({ header, message }: AlertMessageProps) {
         </div>
     )
 };
+
+export default AlertMessage;

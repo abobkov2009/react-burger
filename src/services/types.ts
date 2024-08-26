@@ -1,4 +1,4 @@
-export type ingredientType = {
+export type TIngredient = {
     _id: string;
     name: string;
     type: string;
@@ -13,24 +13,24 @@ export type ingredientType = {
     __v: number;
 };
 
-export type ingredientWithAmountType = ingredientType & { amount: number }
-export type ingredientWithUuidType = ingredientType & { _uuid?: string }
+export type TIngredientWithAmount = TIngredient & { amount: number }
+export type TIngredientWithUuid = TIngredient & { _uuid?: string }
 
 
-export type userInfoType = {
+export type TUserInfo = {
     email: string;
     name: string;
 }
 
-export type authResponseType = {
+export type TAuthResponse = {
     success: boolean;
     message?: string;
     accessToken?: string;
     refreshToken?: string;
-    user?: userInfoType;
+    user?: TUserInfo;
 }
 
-export type authErrorType = {
+export type TAuthError = {
     status: Number; 
     data: { 
         success: boolean; 

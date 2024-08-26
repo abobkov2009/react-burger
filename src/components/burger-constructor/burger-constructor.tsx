@@ -10,7 +10,7 @@ import Modal from '../modal/modal';
 import OrderDetails from './order-details/order-details';
 import StuffingElement from './stuffing-element/stuffing-element';
 
-import { ingredientType } from '../../services/types';
+import { TIngredient } from '../../services/types';
 import { useFetchUserData } from '../../hooks';
 import {
     selectIngredientsInOrder, selectTotalOrderPrice, selectOrderData,
@@ -23,11 +23,11 @@ import { DND_BURGER_INGREDIENTS, URLS } from '../../utils/constants';
 import burgerConstructorStyles from './burger-constructor.module.css';
 
 
-interface DropCollectedProps {
+type TDropCollectedProps = {
     isOver: boolean;
 }
 
-export default function BurgerConstructor() {
+const BurgerConstructor = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const { data: userInfo } = useFetchUserData();
@@ -38,9 +38,9 @@ export default function BurgerConstructor() {
     const orderData = useSelector(selectOrderData);
 
 
-    const [{ isOver }, dropTargetRef] = useDrop<ingredientType, void, DropCollectedProps>({
+    const [{ isOver }, dropTargetRef] = useDrop<TIngredient, void, TDropCollectedProps>({
         accept: DND_BURGER_INGREDIENTS,
-        drop(item: ingredientType) {
+        drop(item: TIngredient) {
             dispatch(ingredientToOrderAdded(item))
         },
         collect: monitor => ({
@@ -125,3 +125,5 @@ export default function BurgerConstructor() {
         </section >
     )
 };
+
+export default BurgerConstructor;

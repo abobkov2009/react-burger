@@ -1,10 +1,10 @@
 import rollingImage from '../../images/rolling.svg'
 import styles from './loader.module.css'
-type LoaderProps = {
+type TLoaderProps = {
     message?: string;
 };
 
-export default function Loader({ message }: LoaderProps) {
+const Loader: React.FC<TLoaderProps> = ({ message }) => {
     return (
         <div className={`${styles.container} p-10`}>
             <img src={rollingImage} alt={message} />
@@ -12,3 +12,5 @@ export default function Loader({ message }: LoaderProps) {
         </div>
     )
 };
+
+export default Loader;
