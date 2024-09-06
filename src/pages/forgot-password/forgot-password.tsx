@@ -17,7 +17,7 @@ type TFormValues = {
     email: string;
 }
 
-const ForgotPasswordPage = () => {
+export default function ForgotPasswordPage(): React.JSX.Element {
     const navigate = useNavigate();
 
     const [resetPasswordTriger] = useRequestPasswordResetMutation();
@@ -64,4 +64,3 @@ const ForgotPasswordPage = () => {
     )
 };
 
-export default ForgotPasswordPage;

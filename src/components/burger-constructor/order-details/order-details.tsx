@@ -4,7 +4,7 @@ import { selectOrderData } from '../../../services/order';
 import orderDetailsStyles from './order-details.module.css';
 import orderDetailsImage from '../../../images/order-detail.png'
 
-const OrderDetails = () => {
+export default function OrderDetails(): React.JSX.Element {
     const orderData = useSelector(selectOrderData);
 
     return (
@@ -18,4 +18,3 @@ const OrderDetails = () => {
     )
 };
 
-export default OrderDetails;

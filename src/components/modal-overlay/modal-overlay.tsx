@@ -4,10 +4,9 @@ type TModalOverlayProps = {
     onCloseModalClick: () => void;
 };
 
-const ModalOverlay: React.FC<TModalOverlayProps> = ({ onCloseModalClick }) => {
+export default function ModalOverlay({ onCloseModalClick }: TModalOverlayProps): React.JSX.Element {
     return (
         <div className={modalOverlayStyles.modalOverlay} onClick={onCloseModalClick}></div>
     )
 };
 
-export default ModalOverlay;

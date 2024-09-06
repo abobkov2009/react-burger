@@ -12,7 +12,7 @@ type TIngredientCardProps = {
     ingredient: TIngredientWithAmount;
 };
 
-const IngredientCard: React.FC<TIngredientCardProps> = ({ingredient}) =>{
+export default function IngredientCard({ ingredient }: TIngredientCardProps): React.JSX.Element {
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -43,4 +43,3 @@ const IngredientCard: React.FC<TIngredientCardProps> = ({ingredient}) =>{
     )
 };
 
-export default IngredientCard;

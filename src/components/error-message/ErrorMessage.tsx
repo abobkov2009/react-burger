@@ -3,7 +3,7 @@ type TErrorMessageProps = {
     errorMessage?: string;
 };
 
-const ErrorMessage: React.FC<TErrorMessageProps> = ({ header = "Произошла ошибка", errorMessage  }) => {
+export default function ErrorMessage({ header = "Произошла ошибка", errorMessage }: TErrorMessageProps): React.JSX.Element {
     return (
         <div className='p-10'>
             {header && (<h2 className="text text_type_main-medium mb-3">{header}</h2>)}
@@ -12,4 +12,3 @@ const ErrorMessage: React.FC<TErrorMessageProps> = ({ header = "Произошл
     )
 };
 
-export default ErrorMessage;

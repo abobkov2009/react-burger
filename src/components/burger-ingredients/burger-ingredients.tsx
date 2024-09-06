@@ -9,7 +9,7 @@ import { useGetIngredientsQuery, selectIngredientsGroupedByCategoryMergedWithAmo
 
 import burgerIngridientsStyles from './burger-ingredients.module.css';
 
-const BurgerIngredients = () => {
+export default function BurgerIngredients(): React.JSX.Element {
     const { error, isLoading } = useGetIngredientsQuery();
     const ingredientsByCategories = useSelector(selectIngredientsGroupedByCategoryMergedWithAmounts);
 
@@ -67,4 +67,3 @@ const BurgerIngredients = () => {
     )
 };
 
-export default BurgerIngredients;

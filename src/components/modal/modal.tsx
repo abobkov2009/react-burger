@@ -15,7 +15,7 @@ type TModalProps = {
 
 const modalRoot = document.getElementById("modal-window") as HTMLDivElement;
 
-const Modal: React.FC<TModalProps> = ({ onModalClose, children }) => {
+export default function Modal({ onModalClose, children }: TModalProps): React.JSX.Element {
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -51,4 +51,3 @@ const Modal: React.FC<TModalProps> = ({ onModalClose, children }) => {
     )
 };
 
-export default Modal;

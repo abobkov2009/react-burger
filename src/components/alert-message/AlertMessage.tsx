@@ -3,7 +3,7 @@ type TAlertMessageProps = {
     message?: string;
 };
 
-const AlertMessage: React.FC<TAlertMessageProps> = ({ header, message }) => {
+export default function AlertMessage({ header, message }: TAlertMessageProps): React.JSX.Element {
     return (
         <div className='pt-15'>
             {header && (<h1 className="text text_type_main-large mb-3">{header}</h1>)}
@@ -12,4 +12,3 @@ const AlertMessage: React.FC<TAlertMessageProps> = ({ header, message }) => {
     )
 };
 
-export default AlertMessage;

@@ -27,7 +27,7 @@ type TDropCollectedProps = {
     isOver: boolean;
 }
 
-const BurgerConstructor = () => {
+export default function BurgerConstructor(): React.JSX.Element {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const { data: userInfo } = useFetchUserData();
@@ -126,4 +126,3 @@ const BurgerConstructor = () => {
     )
 };
 
-export default BurgerConstructor;

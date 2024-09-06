@@ -18,8 +18,7 @@ interface TFormValues {
     password: string;
 }
 
-
-const RegisterPage = () => {
+export default function RegisterPage(): React.JSX.Element {
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -69,4 +68,3 @@ const RegisterPage = () => {
     )
 };
 
-export default RegisterPage;

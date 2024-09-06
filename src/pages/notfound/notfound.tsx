@@ -4,7 +4,7 @@ import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import AlertMessage from '../../components/alert-message/AlertMessage';
 import styles from './notfound.module.css';
 
-const NotfoundPage = () => {
+export default function NotfoundPage(): React.JSX.Element {
     const navigate = useNavigate();
 
     return (
@@ -15,4 +15,3 @@ const NotfoundPage = () => {
     )
 };
 
-export default NotfoundPage;

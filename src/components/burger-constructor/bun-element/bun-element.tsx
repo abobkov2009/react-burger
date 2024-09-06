@@ -9,7 +9,7 @@ type TBunElementProps = {
 };
 
 
-const BunElement: React.FC<TBunElementProps> = ({ ingredient, type }) => {
+export default function BunElement({ ingredient, type }: TBunElementProps): React.JSX.Element {
     return (ingredient !== null)
         ? (<ConstructorElement
             type={type}
@@ -25,4 +25,3 @@ const BunElement: React.FC<TBunElementProps> = ({ ingredient, type }) => {
         </div>)
 };
 
-export default BunElement;

@@ -3,23 +3,10 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 import { fetchQueryWithReauth } from '../../utils/refetchwithauth';
 import { TUserInfo, TAuthResponse } from '../types';
 
-type TRegisterUserArgs = {
+type TAuthArgs = {
     email: string;
     password: string;
     name: string;
-}
-type TLoginUserArgs = {
-    email: string;
-    password: string;
-}
-type TRequestPasswordResetArgs = {
-    email: string;
-}
-type TConfirmPasswordResetArgs = {
-    password: string;
-    token: string;
-}
-type TRefreshAndLogoutTokenArgs = {
     token: string;
 }
 
@@ -27,7 +14,7 @@ export const authApi = createApi({
     reducerPath: 'authApi',
     baseQuery: fetchQueryWithReauth,
     endpoints: (builder) => ({
-        registerUser: builder.mutation<TAuthResponse, TRegisterUserArgs>({
+        registerUser: builder.mutation<TAuthResponse, Pick<TAuthArgs, "email" | "password" | "name">>({
             query(body) {
                 return {
                     url: '/auth/register',
@@ -36,7 +23,7 @@ export const authApi = createApi({
                 }
             },
         }),
-        loginUser: builder.mutation<TAuthResponse, TLoginUserArgs>({
+        loginUser: builder.mutation<TAuthResponse, Pick<TAuthArgs, "email" | "password">>({
             query(body) {
                 return {
                     url: '/auth/login',
@@ -45,7 +32,7 @@ export const authApi = createApi({
                 }
             },
         }),
-        logoutUser: builder.mutation<TAuthResponse, TRefreshAndLogoutTokenArgs>({
+        logoutUser: builder.mutation<TAuthResponse, Pick<TAuthArgs, "token">>({
             query(body) {
                 return {
                     url: '/auth/logout',
@@ -54,7 +41,7 @@ export const authApi = createApi({
                 }
             },
         }),
-        refreshToken: builder.mutation<TAuthResponse, TRefreshAndLogoutTokenArgs>({
+        refreshToken: builder.mutation<TAuthResponse, Pick<TAuthArgs, "token">>({
             query(body) {
                 return {
                     url: '/auth/token',
@@ -72,7 +59,7 @@ export const authApi = createApi({
                 return response.user;
             }
         }),
-        updateUserInfo: builder.mutation<TAuthResponse, TRegisterUserArgs>({
+        updateUserInfo: builder.mutation<TAuthResponse, Pick<TAuthArgs, "email" | "password" | "name">>({
             query(body) {
                 return {
                     url: '/auth/user',
@@ -81,7 +68,7 @@ export const authApi = createApi({
                 }
             },
         }),
-        requestPasswordReset: builder.mutation<TAuthResponse, TRequestPasswordResetArgs>({
+        requestPasswordReset: builder.mutation<TAuthResponse, Pick<TAuthArgs, "email">>({
             query(body) {
                 return {
                     url: '/password-reset',
@@ -90,7 +77,7 @@ export const authApi = createApi({
                 }
             },
         }),
-        confirmPasswordReset: builder.mutation<TAuthResponse, TConfirmPasswordResetArgs>({
+        confirmPasswordReset: builder.mutation<TAuthResponse, Pick<TAuthArgs, "password" | "token">>({
             query(body) {
                 return {
                     url: '/password-reset/reset',

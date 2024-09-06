@@ -2,7 +2,7 @@ import IngredientDetails from '../../components/ingredient-details/ingredient-de
 
 import styles from './ingredient.module.css';
 
-const IngredientPage = () => {
+export default function IngredientPage(): React.JSX.Element {
     return (
         <main className={`${styles.mainContent}`}>
             <IngredientDetails />
@@ -10,4 +10,3 @@ const IngredientPage = () => {
     )
 };
 
-export default IngredientPage;

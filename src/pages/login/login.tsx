@@ -17,8 +17,7 @@ type TFormValues = {
     email: string;
     password: string;
 }
-
-const LoginPage = () => {
+export default function LoginPage(): React.JSX.Element {
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -70,4 +69,3 @@ const LoginPage = () => {
     )
 };
 
-export default LoginPage;

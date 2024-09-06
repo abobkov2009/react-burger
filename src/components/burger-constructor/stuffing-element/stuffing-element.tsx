@@ -18,7 +18,7 @@ type DragItem = {
     index: number,
 }
 
-const StuffingElement: React.FC<TStuffingElementProps> = ({ ingredient, index }) => {
+export default function StuffingElement({ ingredient, index }: TStuffingElementProps): React.JSX.Element {
     const dispatch = useAppDispatch();
     const ref = useRef<HTMLLIElement>(null)
 
@@ -84,4 +84,3 @@ const StuffingElement: React.FC<TStuffingElementProps> = ({ ingredient, index })
     )
 };
 
-export default StuffingElement

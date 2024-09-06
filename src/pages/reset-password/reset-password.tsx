@@ -18,8 +18,7 @@ interface TFormValues {
     token: string;
 }
 
-
-const ResetPasswordPage = () => {
+export default function ResetPasswordPage(): React.JSX.Element {
     const navigate = useNavigate();
 
     const [confirmResetTriger] = useConfirmPasswordResetMutation();
@@ -73,4 +72,3 @@ const ResetPasswordPage = () => {
     )
 };
 
-export default ResetPasswordPage;

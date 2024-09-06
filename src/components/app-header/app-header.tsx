@@ -5,7 +5,7 @@ import { useFetchUserData } from '../../hooks';
 import { URLS } from "../../utils/constants";
 import headerStyles from './app-header.module.css'
 
-const AppHeader = () => {
+export default function AppHeader(): React.JSX.Element {
     const { data: userInfo } = useFetchUserData();
 
     return (
@@ -46,5 +46,3 @@ const AppHeader = () => {
         </header>
     )
 };
-
-export default AppHeader;

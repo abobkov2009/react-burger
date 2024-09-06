@@ -1,9 +1,8 @@
 import AlertMessage from '../../../components/alert-message/AlertMessage';
 
-const OrderHistoryPage = () => {
+export default function OrderHistoryPage(): React.JSX.Element {
     return (
         <AlertMessage header="Упс... такой страницы не найдено." />
     )
 };
 
-export default OrderHistoryPage;

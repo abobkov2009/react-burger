@@ -7,7 +7,7 @@ type TIngredientsTabsProps = {
     onTabClick: (type: string) => void;
 };
 
-const IngredientsTabs: React.FC<TIngredientsTabsProps> = ({ selectedCategory, onTabClick }) => {
+export default function IngredientsTabs({ selectedCategory, onTabClick }: TIngredientsTabsProps): React.JSX.Element {
     return (
         <div className={`${ingredientTabsStyles.container} mb-10`}>
             <Tab value="buns" active={selectedCategory === 'buns'} onClick={onTabClick}>Булки</Tab>
@@ -17,4 +17,3 @@ const IngredientsTabs: React.FC<TIngredientsTabsProps> = ({ selectedCategory, on
     )
 };
 
-export default IngredientsTabs;

@@ -14,8 +14,7 @@ interface TFormValues {
     password: string;
 }
 
-
-const UserInfoPage = () => {
+export default function UserInfoPage(): React.JSX.Element {
     const { data: userInfo } = useFetchUserData();
     const [updateUserTrigger] = useUpdateUserInfoMutation();
 
@@ -75,4 +74,3 @@ const UserInfoPage = () => {
     )
 };
 
-export default UserInfoPage;

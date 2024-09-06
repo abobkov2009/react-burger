@@ -5,7 +5,7 @@ import BurgerIngredients from '../../components/burger-ingredients/burger-ingred
 
 import styles from './home.module.css'
 
-const HomePage = () => {
+export default function HomePage(): React.JSX.Element {
     return (
         <main className={styles.mainContent}>
             <DndProvider backend={HTML5Backend}>
@@ -16,4 +16,3 @@ const HomePage = () => {
     )
 };
 
-export default HomePage;

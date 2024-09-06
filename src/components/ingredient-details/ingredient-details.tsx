@@ -9,7 +9,7 @@ import NutritionItem from './nutrition-item/nutrition-item';
 
 import ingredientDetailStyles from './ingredient-details.module.css';
 
-const IngredientDetails = () => {
+export default function IngredientDetails(): React.JSX.Element {
     const navigate = useNavigate();
     const { ingredient_id } = useParams<{ ingredient_id: string }>();
     const { data: ingredientsList, error, isLoading } = useGetIngredientsQuery();
@@ -46,5 +46,3 @@ const IngredientDetails = () => {
         </>
     )
 };
-
-export default IngredientDetails;

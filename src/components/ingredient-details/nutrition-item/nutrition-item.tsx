@@ -5,7 +5,7 @@ type TNutritionItemProps = {
     value: number;
 };
 
-const NutritionItem: React.FC<TNutritionItemProps> = ({ caption, value }) => {
+export default function NutritionItem({ caption, value }: TNutritionItemProps): React.JSX.Element {
     return (
         <div className={nutritionItemStyles.container}>
             <div className="text text_type_main-small text_color_inactive mb-2">{caption}</div>
@@ -14,4 +14,3 @@ const NutritionItem: React.FC<TNutritionItemProps> = ({ caption, value }) => {
     )
 };
 
-export default NutritionItem;

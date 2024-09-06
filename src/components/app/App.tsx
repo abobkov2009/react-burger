@@ -9,7 +9,7 @@ import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import appStyles from './app.module.css'
 
-const App = () => {
+export default function App(): React.JSX.Element {
     const location = useLocation();
     const background = location.state && location.state.background;
 
@@ -45,5 +45,3 @@ const App = () => {
         </div>
     )
 };
-
-export default App;

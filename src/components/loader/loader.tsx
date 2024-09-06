@@ -4,7 +4,7 @@ type TLoaderProps = {
     message?: string;
 };
 
-const Loader: React.FC<TLoaderProps> = ({ message }) => {
+export default function Loader({ message }: TLoaderProps): React.JSX.Element {
     return (
         <div className={`${styles.container} p-10`}>
             <img src={rollingImage} alt={message} />
@@ -13,4 +13,3 @@ const Loader: React.FC<TLoaderProps> = ({ message }) => {
     )
 };
 
-export default Loader;
