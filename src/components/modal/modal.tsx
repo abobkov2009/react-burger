@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, PropsWithChildren } from 'react';
 import ReactDOM from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 
@@ -8,9 +8,8 @@ import ModalOverlay from '../modal-overlay/modal-overlay';
 import modalStyles from './modal.module.css';
 
 
-type TModalProps = {
+type TModalProps = PropsWithChildren & {
     onModalClose?: () => void;
-    children: React.ReactElement;
 };
 
 const modalRoot = document.getElementById("modal-window") as HTMLDivElement;

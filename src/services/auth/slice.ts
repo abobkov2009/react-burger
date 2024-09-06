@@ -16,10 +16,10 @@ export const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        userLogedIn: (state, action: PayloadAction<TUserInfo>) => {
+        userLoggedIn: (state, action: PayloadAction<TUserInfo>) => {
             state.user = action.payload;
         },
-        userLogedOut: (state) => {
+        userLoggedOut: (state) => {
             state.user = null;
         },
     },
