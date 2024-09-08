@@ -1,25 +1,12 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 
 import { fetchQueryWithReauth } from '../../utils/refetchwithauth';
-import { userInfoType, authResponseType } from '../types';
+import { TUserInfo, TAuthResponse } from '../types';
 
-type registerUserArgsType = {
+type TAuthArgs = {
     email: string;
     password: string;
     name: string;
-}
-type loginUserArgsType = {
-    email: string;
-    password: string;
-}
-type requestPasswordResetArgsType = {
-    email: string;
-}
-type confirmPasswordResetArgsType = {
-    password: string;
-    token: string;
-}
-type refreshAndLogoutTokenArgsType = {
     token: string;
 }
 
@@ -27,7 +14,7 @@ export const authApi = createApi({
     reducerPath: 'authApi',
     baseQuery: fetchQueryWithReauth,
     endpoints: (builder) => ({
-        registerUser: builder.mutation<authResponseType, registerUserArgsType>({
+        registerUser: builder.mutation<TAuthResponse, Pick<TAuthArgs, "email" | "password" | "name">>({
             query(body) {
                 return {
                     url: '/auth/register',
@@ -36,7 +23,7 @@ export const authApi = createApi({
                 }
             },
         }),
-        loginUser: builder.mutation<authResponseType, loginUserArgsType>({
+        loginUser: builder.mutation<TAuthResponse, Pick<TAuthArgs, "email" | "password">>({
             query(body) {
                 return {
                     url: '/auth/login',
@@ -45,7 +32,7 @@ export const authApi = createApi({
                 }
             },
         }),
-        logoutUser: builder.mutation<authResponseType, refreshAndLogoutTokenArgsType>({
+        logoutUser: builder.mutation<TAuthResponse, Pick<TAuthArgs, "token">>({
             query(body) {
                 return {
                     url: '/auth/logout',
@@ -54,7 +41,7 @@ export const authApi = createApi({
                 }
             },
         }),
-        refreshToken: builder.mutation<authResponseType, refreshAndLogoutTokenArgsType>({
+        refreshToken: builder.mutation<TAuthResponse, Pick<TAuthArgs, "token">>({
             query(body) {
                 return {
                     url: '/auth/token',
@@ -63,16 +50,16 @@ export const authApi = createApi({
                 }
             },
         }),
-        getUser: builder.query<userInfoType | undefined, void>({
+        getUser: builder.query<TUserInfo | undefined, void>({
             query: () => `/auth/user`,
-            transformResponse: (response: authResponseType) => {
+            transformResponse: (response: TAuthResponse) => {
                 if (response.success === false) {
                     throw new Error('Данные не получены');
                 }
                 return response.user;
             }
         }),
-        updateUserInfo: builder.mutation<authResponseType, registerUserArgsType>({
+        updateUserInfo: builder.mutation<TAuthResponse, Pick<TAuthArgs, "email" | "password" | "name">>({
             query(body) {
                 return {
                     url: '/auth/user',
@@ -81,7 +68,7 @@ export const authApi = createApi({
                 }
             },
         }),
-        requestPasswordReset: builder.mutation<authResponseType, requestPasswordResetArgsType>({
+        requestPasswordReset: builder.mutation<TAuthResponse, Pick<TAuthArgs, "email">>({
             query(body) {
                 return {
                     url: '/password-reset',
@@ -90,7 +77,7 @@ export const authApi = createApi({
                 }
             },
         }),
-        confirmPasswordReset: builder.mutation<authResponseType, confirmPasswordResetArgsType>({
+        confirmPasswordReset: builder.mutation<TAuthResponse, Pick<TAuthArgs, "password" | "token">>({
             query(body) {
                 return {
                     url: '/password-reset/reset',

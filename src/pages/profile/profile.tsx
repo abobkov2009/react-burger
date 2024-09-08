@@ -6,7 +6,7 @@ import { clearTokensInLocalStorage } from '../../utils/local-storage';
 import { URLS } from '../../utils/constants';
 import styles from './profile.module.css';
 
-export default function ProfilePage() {
+export default function ProfilePage(): React.JSX.Element {
     const navigate = useNavigate();
     const [logoutUserTriger] = useLogoutUserMutation();
 
@@ -50,3 +50,4 @@ export default function ProfilePage() {
         </main>
     )
 };
+

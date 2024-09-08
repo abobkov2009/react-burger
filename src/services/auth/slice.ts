@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { authApi } from './api';
-import { userInfoType } from '../types';
+import { TUserInfo } from '../types';
 
-export interface AuthState {
-    user: userInfoType | null,
+export type AuthState = {
+    user: TUserInfo | null,
 }
 
 const initialState: AuthState = {
@@ -16,10 +16,10 @@ export const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        userLogedIn: (state, action: PayloadAction<userInfoType>) => {
+        userLoggedIn: (state, action: PayloadAction<TUserInfo>) => {
             state.user = action.payload;
         },
-        userLogedOut: (state) => {
+        userLoggedOut: (state) => {
             state.user = null;
         },
     },
@@ -30,25 +30,25 @@ export const authSlice = createSlice({
                     state.user = action.payload;
                 }
             })
-        .addMatcher(authApi.endpoints.registerUser.matchFulfilled, (state, action) => {
-            if (action.payload.success && action.payload.user) {
-                state.user = action.payload.user;
-            }
-        })
-        .addMatcher(authApi.endpoints.loginUser.matchFulfilled, (state, action) => {
-            if (action.payload.success && action.payload.user) {
-                state.user = action.payload.user;
-            }
-        })
-        .addMatcher(authApi.endpoints.logoutUser.matchFulfilled, (state, action) => {
-            if (action.payload.success) {
-                state.user = null;
-            }
-        })
-        .addMatcher(authApi.endpoints.updateUserInfo.matchFulfilled, (state, action) => {
-            if (action.payload.success && action.payload.user) {
-                state.user = action.payload.user;
-            }
-        })
+            .addMatcher(authApi.endpoints.registerUser.matchFulfilled, (state, action) => {
+                if (action.payload.success && action.payload.user) {
+                    state.user = action.payload.user;
+                }
+            })
+            .addMatcher(authApi.endpoints.loginUser.matchFulfilled, (state, action) => {
+                if (action.payload.success && action.payload.user) {
+                    state.user = action.payload.user;
+                }
+            })
+            .addMatcher(authApi.endpoints.logoutUser.matchFulfilled, (state, action) => {
+                if (action.payload.success) {
+                    state.user = null;
+                }
+            })
+            .addMatcher(authApi.endpoints.updateUserInfo.matchFulfilled, (state, action) => {
+                if (action.payload.success && action.payload.user) {
+                    state.user = action.payload.user;
+                }
+            })
     }
 })

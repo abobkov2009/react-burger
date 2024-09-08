@@ -1,11 +1,12 @@
 import modalOverlayStyles from './modal-overlay.module.css';
 
-type ModalOverlayProps = {
+type TModalOverlayProps = {
     onCloseModalClick: () => void;
 };
 
-export default function ModalOverlay({ onCloseModalClick }: ModalOverlayProps) {
+export default function ModalOverlay({ onCloseModalClick }: TModalOverlayProps): React.JSX.Element {
     return (
         <div className={modalOverlayStyles.modalOverlay} onClick={onCloseModalClick}></div>
     )
 };
+

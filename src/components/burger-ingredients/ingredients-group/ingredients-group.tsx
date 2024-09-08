@@ -1,14 +1,14 @@
 import { forwardRef } from 'react';
 import IngredientCard from '../ingredient-card/ingredient-card';
-import { ingredientWithAmountType } from '../../../services/types';
+import { TIngredientWithAmount } from '../../../services/types';
 import ingridientsGroupStyles from './ingredients-group.module.css'
 
-type IngredientsGroupProps = {
-    ingredientsList: ingredientWithAmountType[];
+type TIngredientsGroupProps = {
+    ingredientsList: TIngredientWithAmount[];
     groupName: string;
 };
 
-export const IngredientsGroup = forwardRef<HTMLLIElement, IngredientsGroupProps>(({ ingredientsList, groupName }, ref) => {
+const IngredientsGroup = forwardRef<HTMLLIElement, TIngredientsGroupProps>(({ ingredientsList, groupName }, ref) => {
     return (
         <li ref={ref}>
             <h2 className="text text_type_main-medium mb-6">{groupName}</h2>

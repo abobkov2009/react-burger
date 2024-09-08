@@ -1,15 +1,15 @@
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { ingredientType } from '../../../services/types';
+import { TIngredient } from '../../../services/types';
 import bunElementStyles from './bun-element.module.css';
 
-type BunElementProps = {
-    ingredient: ingredientType | null;
+type TBunElementProps = {
+    ingredient: TIngredient | null;
     type: "top" | "bottom";
 };
 
 
-export default function BunElement({ ingredient, type }: BunElementProps) {
+export default function BunElement({ ingredient, type }: TBunElementProps): React.JSX.Element {
     return (ingredient !== null)
         ? (<ConstructorElement
             type={type}
@@ -24,3 +24,4 @@ export default function BunElement({ ingredient, type }: BunElementProps) {
             </span>
         </div>)
 };
+

@@ -1,11 +1,11 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { fetchQueryWithReauth } from '../../utils/refetchwithauth';
 
-type placeOrderArgsType = {
+type TPlaceOrderArgs = {
     ingredients: string[];
 }
 
-type placeOrderResponseType = {
+type TPlaceOrderResponse = {
     success: boolean;
     name: string;
     order: {
@@ -17,7 +17,7 @@ export const orderApi = createApi({
     reducerPath: 'orderApi',
     baseQuery: fetchQueryWithReauth,
     endpoints: (builder) => ({
-        placeOrder: builder.mutation<placeOrderResponseType, placeOrderArgsType>({
+        placeOrder: builder.mutation<TPlaceOrderResponse, TPlaceOrderArgs>({
             query(body) {
                 return {
                     url: '/orders',

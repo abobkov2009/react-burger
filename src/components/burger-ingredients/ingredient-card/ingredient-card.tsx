@@ -3,17 +3,16 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { ingredientWithAmountType } from '../../../services/types';
+import { TIngredientWithAmount } from '../../../services/types';
 import { DND_BURGER_INGREDIENTS, URLS } from '../../../utils/constants';
 
 import ingredientCardStyles from './ingredient-card.module.css';
 
-
-type IngredientCardProps = {
-    ingredient: ingredientWithAmountType;
+type TIngredientCardProps = {
+    ingredient: TIngredientWithAmount;
 };
 
-export default function IngredientCard({ ingredient }: IngredientCardProps) {
+export default function IngredientCard({ ingredient }: TIngredientCardProps): React.JSX.Element {
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -43,3 +42,4 @@ export default function IngredientCard({ ingredient }: IngredientCardProps) {
         </div>
     )
 };
+

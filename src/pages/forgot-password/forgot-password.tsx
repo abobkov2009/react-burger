@@ -4,7 +4,7 @@ import { Button, EmailInput } from "@ya.praktikum/react-developer-burger-ui-comp
 
 import { useForm } from '../../hooks';
 import { useRequestPasswordResetMutation } from '../../services/auth';
-import { authErrorType } from '../../services/types';
+import { TAuthError } from '../../services/types';
 import { setPasswordResetRequested } from '../../utils/local-storage';
 import { URLS } from '../../utils/constants';
 import Modal from '../../components/modal/modal';
@@ -13,16 +13,16 @@ import ErrorMessage from '../../components/error-message/ErrorMessage';
 import styles from './forgot-password.module.css';
 
 
-interface IFormValues {
+type TFormValues = {
     email: string;
 }
 
-export default function ForgotPasswordPage() {
+export default function ForgotPasswordPage(): React.JSX.Element {
     const navigate = useNavigate();
 
     const [resetPasswordTriger] = useRequestPasswordResetMutation();
 
-    const { formValues, handleFormChange } = useForm<IFormValues>({ email: '' });
+    const { formValues, handleFormChange } = useForm<TFormValues>({ email: '' });
 
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -40,7 +40,7 @@ export default function ForgotPasswordPage() {
             }
         }
         catch (err) {
-            setErrorMessage((err && typeof err === 'object' && 'data' in err) ? (err as authErrorType).data.message : 'Неизвестная ошибка');
+            setErrorMessage((err && typeof err === 'object' && 'data' in err) ? (err as TAuthError).data.message : 'Неизвестная ошибка');
         }
     }
 
@@ -63,3 +63,4 @@ export default function ForgotPasswordPage() {
         </main>
     )
 };
+

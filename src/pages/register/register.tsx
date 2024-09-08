@@ -4,7 +4,7 @@ import { Button, EmailInput, Input, PasswordInput } from "@ya.praktikum/react-de
 
 import { useRegisterUserMutation } from '../../services/auth';
 import { useForm } from '../../hooks';
-import { authErrorType } from '../../services/types';
+import { TAuthError } from '../../services/types';
 import { saveTokensToLocalStorage } from '../../utils/local-storage';
 import { URLS } from '../../utils/constants';
 import Modal from '../../components/modal/modal';
@@ -12,20 +12,19 @@ import ErrorMessage from '../../components/error-message/ErrorMessage';
 
 import styles from './register.module.css';
 
-interface IFormValues {
+interface TFormValues {
     name: string;
     email: string;
     password: string;
 }
 
-
-export default function RegisterPage() {
+export default function RegisterPage(): React.JSX.Element {
     const navigate = useNavigate();
     const location = useLocation();
 
     const [registerUserTriger, { isLoading }] = useRegisterUserMutation();
 
-    const { formValues, handleFormChange } = useForm<IFormValues>({ name: '', email: '', password: '' });
+    const { formValues, handleFormChange } = useForm<TFormValues>({ name: '', email: '', password: '' });
 
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -43,7 +42,7 @@ export default function RegisterPage() {
             }
         }
         catch (err) {
-            setErrorMessage((err && typeof err === 'object' && 'data' in err) ? (err as authErrorType).data.message : 'Неизвестная ошибка');
+            setErrorMessage((err && typeof err === 'object' && 'data' in err) ? (err as TAuthError).data.message : 'Неизвестная ошибка');
         }
     }
 
@@ -68,3 +67,4 @@ export default function RegisterPage() {
         </main>
     )
 };
+

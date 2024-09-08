@@ -7,7 +7,7 @@ import type {
 
 import { NORMA_API_URL } from './constants';
 import { getAccessTokenFromLocalStorage, getRefreshTokenFromLocalStorage, saveTokensToLocalStorage } from './local-storage';
-import { authResponseType } from '../services/types';
+import { TAuthResponse } from '../services/types';
 
 
 const baseQuery = fetchBaseQuery({
@@ -34,7 +34,7 @@ export const fetchQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, Fetc
                     body : { token: refreshToken },
                 }, api, extraOptions);
             if (refreshResult.data) {
-                const data = refreshResult.data as authResponseType;
+                const data = refreshResult.data as TAuthResponse;
                 if (data.accessToken && data.refreshToken) {
                     saveTokensToLocalStorage(data.accessToken, data.refreshToken);
                     result = await baseQuery(args, api, extraOptions)

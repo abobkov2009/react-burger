@@ -5,8 +5,7 @@ import { useFetchUserData } from '../../hooks';
 import { URLS } from "../../utils/constants";
 import headerStyles from './app-header.module.css'
 
-
-export default function AppHeader() {
+export default function AppHeader(): React.JSX.Element {
     const { data: userInfo } = useFetchUserData();
 
     return (

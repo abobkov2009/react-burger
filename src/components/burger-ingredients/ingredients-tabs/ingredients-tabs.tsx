@@ -2,12 +2,12 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import ingredientTabsStyles from './ingredients-tabs.module.css';
 
-type IngredientsTabsProps = {
+type TIngredientsTabsProps = {
     selectedCategory: string;
     onTabClick: (type: string) => void;
 };
 
-export default function IngredientsTabs({ selectedCategory, onTabClick }: IngredientsTabsProps) {
+export default function IngredientsTabs({ selectedCategory, onTabClick }: TIngredientsTabsProps): React.JSX.Element {
     return (
         <div className={`${ingredientTabsStyles.container} mb-10`}>
             <Tab value="buns" active={selectedCategory === 'buns'} onClick={onTabClick}>Булки</Tab>
@@ -16,3 +16,4 @@ export default function IngredientsTabs({ selectedCategory, onTabClick }: Ingred
         </div>
     )
 };
+
