@@ -23,7 +23,7 @@ export default function AppHeader(): React.JSX.Element {
                             </>
                         )}
                     </NavLink>
-                    <NavLink className={`p-5 ${headerStyles.navitem}`} to={URLS.ORDER_QUEUE}>
+                    <NavLink className={`p-5 ${headerStyles.navitem}`} to={URLS.FEED}>
                         {({ isActive }: { isActive: boolean }) => (
                             <>
                                 <ListIcon type={isActive ? "primary" : "secondary"} />

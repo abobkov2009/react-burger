@@ -1,15 +1,15 @@
 .mainContent {
     height: 75%;
-    width: 100%;
-    margin-top: 150px;
+    width: 100%;    
     display: flex;
     justify-content: center;
 }
 
-.navmenu {
+.navmenu {    
     width: 320px;    
     display: flex;
     flex-direction: column;  
+    margin-top: 150px;
 }
 
 .navLink {
@@ -25,6 +25,6 @@
 }
 
 .outletdiv {
-    width: 480px;    
+    width: 100%;    
 }
 

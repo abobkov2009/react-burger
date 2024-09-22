@@ -16,6 +16,16 @@ export type TIngredient = {
 export type TIngredientWithAmount = TIngredient & { amount: number }
 export type TIngredientWithUuid = TIngredient & { _uuid?: string }
 
+export type TOrder = {
+    ingredients: ReadonlyArray<string>;
+    _id: string;
+    status: 'done' | 'pending' | 'created';
+    number: number;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
 
 export type TUserInfo = {
     email: string;
@@ -31,9 +41,9 @@ export type TAuthResponse = {
 }
 
 export type TAuthError = {
-    status: Number; 
-    data: { 
-        success: boolean; 
-        message: string; 
+    status: Number;
+    data: {
+        success: boolean;
+        message: string;
     };
 }

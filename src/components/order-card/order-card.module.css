@@ -1,0 +1,76 @@
+.ordercard {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 24px;
+    box-sizing: border-box;
+    background: #1C1C21;
+    border: 1px solid transparent;
+    border-radius: 40px;
+    gap: 24px;
+    text-decoration: none;
+    color: #F2F2F3;    
+}
+
+.orderheader {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.orderdetails {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+}
+
+.ingredientslist {
+    padding: 0;
+    display: inline-flex;
+}
+
+.ingredientitem {
+    position: relative;
+    display: inline-block;
+    width: 64px;
+    height: 64px;
+    box-sizing: border-box;
+    background: linear-gradient(#131316, #131316) padding-box, linear-gradient(45deg, #801ab2, #4c4cff) border-box;
+    border: 2px solid transparent;
+    border-radius: 100px;
+    &:not(:first-child) {
+        margin-left: -16px;
+    }
+}
+
+.ingredientimage {
+    width: 64px;
+    height: 64px;
+    padding: 4px;
+    box-sizing: border-box;
+    object-fit: cover;
+}
+
+.hiddenimage {
+    filter: blur(1px);
+}
+
+.hiddenitemstext {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap; 
+    text-shadow: 1px 1px 2px #4c4cff;
+
+}
+
+.price {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: nowrap;
+}

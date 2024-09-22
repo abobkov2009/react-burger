@@ -3,8 +3,7 @@
     width: 720px;
     margin: auto;
     background-color: #1c1c21;
-    border-radius: 40px;
-    z-index: 1;
+    border-radius: 40px;    
 }
 
 .caption {
@@ -22,6 +21,7 @@
     left: 0;
     right: 0;
     display: flex;
+    z-index: 100;
 }
 
 .closeModalButton {
