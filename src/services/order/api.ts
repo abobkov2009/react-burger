@@ -30,5 +30,5 @@ export const orderApi = createApi({
 });
 
 export const {
-    usePlaceOrderMutation
+    usePlaceOrderMutation,
 } = orderApi;
