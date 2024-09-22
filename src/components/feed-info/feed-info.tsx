@@ -10,13 +10,8 @@ export default function FeedInfo(): React.JSX.Element {
     const location = useLocation();
     const feedInfo = useSelector(selectFeedInfo)
 
-    const totalOrderCount = feedInfo
-        ? feedInfo.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")
-        : 0;
-
-    const todayOrderCount = feedInfo
-        ? feedInfo.totalToday.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")
-        : 0;
+    const totalOrderCount = feedInfo?.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") || 0;
+    const todayOrderCount = feedInfo?.totalToday.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") || 0;
 
     return (
         <section className={styles.container}>
