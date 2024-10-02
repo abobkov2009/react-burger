@@ -9,4 +9,4 @@
 
 ## Посмотреть проект можно по ссылке 
 
-[https://stellar-burgers.abobkov.tk/](https://https://stellar-burgers.abobkov.tk/).
+[https://stellar-burgers.abobkov.tk/](https://stellar-burgers.abobkov.tk/).
