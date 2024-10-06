@@ -1,46 +1,32 @@
-# Getting Started with Create React App
+# Учебный проект Stellar Burgers
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Stellar Burger — это современное веб-приложение для создания космических бургеров с использованием интерактивного конструктора. Пользователи могут собирать свои уникальные бургеры, добавляя различные ингредиенты с помощью drag-and-drop, а затем оформлять заказ. Приложение поддерживает авторизацию, регистрацию, восстановление пароля и предоставляет доступ к личному кабинету. Также реализована лента заказов, которая обновляется в реальном времени через WebSocket, что позволяет отслеживать статус приготовления бургеров.
 
-## Available Scripts
+Проект создан в рамках учебных заданий для отработки навыков разработки веб-приложений с использованием современных технологий.
 
-In the project directory, you can run:
+## Функционал
+Всё как в обычной бургерной: собираешь бургер из ингредиентов, жмешь на кнопку "Оформить заказ".
+Получаешь номер заказа, а в личном кабинете можешь посмотреть историю своих заказов, или заглянуть на "кухню" в "ленту заказов" и посмотрить какие еще бургеры собирали в последнее время.
 
-### `npm start`
+## Технологии
+Проект разрабатывается с использованием:
++ Typescript
++ React
++ Redux Toolkit + RTK Query
++ React-DnD
++ React-Router
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Тестирование проводилось с помощью:
++ unit тесты - jest 
++ e2e - cypress
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Посмотреть проект можно по ссылке 
 
-### `npm test`
+[https://stellar-burgers.abobkov.tk/](https://stellar-burgers.abobkov.tk/).
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Инструкция по работе
++ npm install — установить зависимости.
++ npm start — запустить сайт на локальном сервере.
++ npm test - запустить unit тесты
++ npm run cypress:open - запустить тестирование в cypress
++ npm run build — сборка для продакшена.
