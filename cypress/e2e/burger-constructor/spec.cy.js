@@ -14,14 +14,14 @@ describe("Тест перетаскивания компонентов", () => {
   it("Перетащим в конструктор по одному ингредиенту каждого типа, а потом заменим булку", () => {
     cy.visit('/');
 
-    cy.get(selectors.burgerConstructorContainer).as('burgerConstructor')
-    cy.get(selectors.bunIngredientCard).first().as('bunIngredient')
-    cy.get(selectors.sauceIngredientCard).first().as('sauceIngredient')
-    cy.get(selectors.mainIngredientCard).first().as('mainIngredient')
+    cy.getBySel(selectors.burgerConstructorContainer).as('burgerConstructor')
+    cy.getBySel(selectors.bunIngredientCard).first().as('bunIngredient')
+    cy.getBySel(selectors.sauceIngredientCard).first().as('sauceIngredient')
+    cy.getBySel(selectors.mainIngredientCard).first().as('mainIngredient')
 
 
-    cy.get(selectors.topBunInConstructor).first().as('topBun')
-    cy.get(selectors.bottomBunInConstructor).first().as('bottomBun')
+    cy.getBySel(selectors.topBunInConstructor).first().as('topBun')
+    cy.getBySel(selectors.bottomBunInConstructor).first().as('bottomBun')
 
     //Найдем название первой булки
     let bun_name;
@@ -52,12 +52,12 @@ describe("Тест перетаскивания компонентов", () => {
     cy.get('@burgerConstructor').trigger('drop');
 
     //В конструкторе теперь должна быть 1 ингредиент
-    cy.get(selectors.stuffingInConstructor)
+    cy.getBySel(selectors.stuffingInConstructor)
       .its('length')
       .should('eq', 1);
 
     //В конструкторе теперь должен быть ингредиент с названием соуса
-    cy.get(selectors.stuffingInConstructor)
+    cy.getBySel(selectors.stuffingInConstructor)
       .first()
       .within(() => {
         cy.get('span').contains(sauce_name).should('exist');
@@ -73,19 +73,19 @@ describe("Тест перетаскивания компонентов", () => {
     cy.get('@mainIngredient').trigger('dragstart');
     cy.get('@burgerConstructor').trigger('drop');
     //В конструкторе теперь должно быть 2 ингредиента
-    cy.get(selectors.stuffingInConstructor)
+    cy.getBySel(selectors.stuffingInConstructor)
       .its('length')
       .should('eq', 2);
 
     //В конструкторе теперь должен быть ингредиент с названием начинки
-    cy.get(selectors.stuffingInConstructor)
+    cy.getBySel(selectors.stuffingInConstructor)
       .last()
       .within(() => {
         cy.get('span').contains(main_name).should('exist');
       });
 
     //Найдем название второй булки
-    cy.get(selectors.bunIngredientCard).last().as('secondBun')
+    cy.getBySel(selectors.bunIngredientCard).last().as('secondBun')
     let second_bun_name;
     cy.get('@secondBun')
       .find(selectors.nameInIngredientCard)
@@ -104,25 +104,25 @@ describe("Тест перетаскивания компонентов", () => {
     });
 
     //Нажмем на кнопку оформления заказа
-    cy.get(selectors.submitOrderButton)
+    cy.getBySel(selectors.submitOrderButton)
       .click();
     //Проверяем что модальное окно открыто
-    cy.get(selectors.modalContainer).should("be.visible");
+    cy.getBySel(selectors.modalContainer).should("be.visible");
 
     //Проверяем номер заказа
-    cy.get(selectors.orderNumber).should("be.visible");
-    cy.get(selectors.orderNumber)
+    cy.getBySel(selectors.orderNumber).should("be.visible");
+    cy.getBySel(selectors.orderNumber)
       .invoke('text')
       .then((text) => { expect(text).to.equal("55204"); });
 
     //Закроем модальное окно с заказом
-    cy.get(selectors.modalCloseButton)
+    cy.getBySel(selectors.modalCloseButton)
       .click();
 
     //Окно должно закрыться
-    cy.get(selectors.modalContainer).should("not.exist");
+    cy.getBySel(selectors.modalContainer).should("not.exist");
     //Конструктор должен очиститься
-    cy.get(selectors.stuffingInConstructor).should("not.exist");
+    cy.getBySel(selectors.stuffingInConstructor).should("not.exist");
     cy.get('@topBun').within(() => {
       cy.get('span').contains("Добавьте булку").should('exist');
     });
@@ -134,7 +134,7 @@ describe("Тест перетаскивания компонентов", () => {
   it("Проверка модалки ингредиента", () => {
     cy.visit('/');
 
-    cy.get(selectors.bunIngredientCard).first().as('bunIngredient')
+    cy.getBySel(selectors.bunIngredientCard).first().as('bunIngredient')
 
     //Найдем название первой булки
     let bun_name;
@@ -148,40 +148,40 @@ describe("Тест перетаскивания компонентов", () => {
       .trigger("click");
 
     //Проверяем что модальное окно открыто
-    cy.get(selectors.modalContainer).should("be.visible");
+    cy.getBySel(selectors.modalContainer).should("be.visible");
 
     //Проверяем название ингредиента
-    cy.get(selectors.ingredientDetailsName).should("be.visible");
-    cy.get(selectors.ingredientDetailsName)
+    cy.getBySel(selectors.ingredientDetailsName)
+      .should("be.visible")
       .invoke('text')
       .then((text) => { expect(text).to.equal(bun_name); });
 
     //Закроем модальное окно кнопкой
-    cy.get(selectors.modalCloseButton)
+    cy.getBySel(selectors.modalCloseButton)
       .click();
     //Окно должно закрыться
-    cy.get(selectors.modalContainer).should("not.exist");
+    cy.getBySel(selectors.modalContainer).should("not.exist");
 
     //Нажмем на булку снова
     cy.get('@bunIngredient')
       .trigger("click");
     //Проверяем что модальное окно открыто
-    cy.get(selectors.modalContainer).should("be.visible");
+    cy.getBySel(selectors.modalContainer).should("be.visible");
     //Нажимаем Escape
     cy.get('body').type('{esc}');
     //Окно должно закрыться
-    cy.get(selectors.modalContainer).should("not.exist");
+    cy.getBySel(selectors.modalContainer).should("not.exist");
 
     //Нажмем на булку снова
     cy.get('@bunIngredient')
       .trigger("click");
     //Проверяем что модальное окно открыто
-    cy.get(selectors.modalContainer).should("be.visible");
+    cy.getBySel(selectors.modalContainer).should("be.visible");
     //Нажимаем куда-нибудь мимо модального окна
-    cy.get(selectors.modalOverlay)
+    cy.getBySel(selectors.modalOverlay)
       .trigger("click", { force: true });
     //Окно должно закрыться
-    cy.get(selectors.modalContainer).should("not.exist");
+    cy.getBySel(selectors.modalContainer).should("not.exist");
 
   });
 });
