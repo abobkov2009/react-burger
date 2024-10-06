@@ -5,7 +5,7 @@ import { NORMA_API_URL, NORMA_WS_FEED_ENDPOINT, NORMA_WS_PROFILE_FEED_ENDPOINT, 
 import { getAccessTokenFromLocalStorage, getRefreshTokenFromLocalStorage, saveTokensToLocalStorage } from '../../utils/local-storage';
 import { authApi } from '../auth';
 
-type TFeedResponse = {
+export type TFeedResponse = {
     success?: boolean;
     orders: TOrder[];
     total: number;

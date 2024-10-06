@@ -7,7 +7,7 @@ export type AuthState = {
     user: TUserInfo | null,
 }
 
-const initialState: AuthState = {
+export const initialState: AuthState = {
     user: null
 };
 

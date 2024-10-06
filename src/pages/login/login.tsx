@@ -48,9 +48,9 @@ export default function LoginPage(): React.JSX.Element {
         <main className={styles.mainContent}>
             <h2 className='text text_type_main-medium mb-6'>Вход</h2>
             <form className={styles.form} onSubmit={onFormSubmit}>
-                <EmailInput name='email' value={formValues.email ?? ''} onChange={handleFormChange} required extraClass='mb-6' />
-                <PasswordInput name='password' value={formValues.password ?? ''} onChange={handleFormChange} required extraClass='mb-6' />
-                <Button htmlType='submit' type='primary' size='medium' extraClass='mb-20'>Войти</Button>
+                <EmailInput name='email' value={formValues.email ?? ''} onChange={handleFormChange} required extraClass='mb-6' data-at-selector="login-email-input" />
+                <PasswordInput name='password' value={formValues.password ?? ''} onChange={handleFormChange} required extraClass='mb-6' data-at-selector="login-password-input" />
+                <Button htmlType='submit' type='primary' size='medium' extraClass='mb-20' data-at-selector="login-button">Войти</Button>
             </form>
             <div className={`mb-4 ${styles.flexrow}`}>
                 <p className={'text text_type_main-default text_color_inactive'}>Вы новый пользователь?</p>
