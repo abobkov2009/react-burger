@@ -1,7 +1,5 @@
 import * as selectors from "./selectors";
 
-const localURL = "http://localhost:3000";
-
 describe("Тест перетаскивания компонентов", () => {
   beforeEach(() => {
     cy.intercept("GET", "/ingredients", { fixture: "ingredients.json" })
@@ -14,7 +12,7 @@ describe("Тест перетаскивания компонентов", () => {
 
 
   it("Перетащим в конструктор по одному ингредиенту каждого типа, а потом заменим булку", () => {
-    cy.visit(localURL);
+    cy.visit('/');
 
     cy.get(selectors.burgerConstructorContainer).as('burgerConstructor')
     cy.get(selectors.bunIngredientCard).first().as('bunIngredient')
@@ -134,7 +132,7 @@ describe("Тест перетаскивания компонентов", () => {
   });
 
   it("Проверка модалки ингредиента", () => {
-    cy.visit(localURL);
+    cy.visit('/');
 
     cy.get(selectors.bunIngredientCard).first().as('bunIngredient')
 
