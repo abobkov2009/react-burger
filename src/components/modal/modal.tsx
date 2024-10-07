@@ -36,11 +36,11 @@ export default function Modal({ onModalClose, children }: TModalProps): React.JS
     }
 
     return ReactDOM.createPortal(
-        (<div className={modalStyles.modal}>
+        (<div className={modalStyles.modal} data-testid="modal-container">
             <ModalOverlay onCloseModalClick={closeModalWindow} />
             <div className={modalStyles.container}>
                 {children}
-                <button className={modalStyles.closeModalButton} onClick={closeModalWindow}>
+                <button className={modalStyles.closeModalButton} onClick={closeModalWindow} data-testid="modal-close-button">
                     <CloseIcon type="primary" />
                 </button>
             </div>

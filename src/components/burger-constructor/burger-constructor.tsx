@@ -72,8 +72,8 @@ export default function BurgerConstructor(): React.JSX.Element {
 
     return (
         <section className={`pt-25 ml-4 ${burgerConstructorStyles.container}`}>
-            <div ref={dropTargetRef} className={`${isOver ? burgerConstructorStyles.dropAreaHover : burgerConstructorStyles.dropArea}`}>
-                <div className='pr-4 ml-8'>
+            <div ref={dropTargetRef} className={`${isOver ? burgerConstructorStyles.dropAreaHover : burgerConstructorStyles.dropArea}`} data-testid="burger-constructor-container">
+                <div className='pr-4 ml-8' data-testid="constructor-top-bun">
                     <BunElement
                         ingredient={ingredientsInOrder.bun}
                         type="top"
@@ -91,7 +91,7 @@ export default function BurgerConstructor(): React.JSX.Element {
                         </div>
                     </div>)
                 }
-                <div className='pr-4 ml-8'>
+                <div className='pr-4 ml-8' data-testid="constructor-bottom-bun">
                     <BunElement
                         ingredient={ingredientsInOrder.bun}
                         type="bottom"
@@ -110,6 +110,7 @@ export default function BurgerConstructor(): React.JSX.Element {
                     extraClass="ml-10"
                     onClick={(onOrderSubmitButtonClick)}
                     disabled={ingredientsInOrder.bun === null || isLoading}
+                    data-testid="submit-order"
                 >Оформить заказ</Button>
             </div>
             {

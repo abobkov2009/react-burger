@@ -5,7 +5,7 @@ type TPlaceOrderArgs = {
     ingredients: string[];
 }
 
-type TPlaceOrderResponse = {
+export type TPlaceOrderResponse = {
     success: boolean;
     name: string;
     order: {

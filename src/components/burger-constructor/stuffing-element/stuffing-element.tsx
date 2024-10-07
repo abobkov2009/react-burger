@@ -70,7 +70,7 @@ export default function StuffingElement({ ingredient, index }: TStuffingElementP
     drag(drop(ref))
 
     return (
-        <li ref={ref} className={`${stuffingElementStyles.ingredientCard} ${isDragging && stuffingElementStyles.dragging}`} key={ingredient._uuid}>
+        <li ref={ref} className={`${stuffingElementStyles.ingredientCard} ${isDragging && stuffingElementStyles.dragging}`} key={ingredient._uuid} data-testid="constructor-stuffing">
             <div className={stuffingElementStyles.ingredientDragger}>
                 <DragIcon type="primary" />
             </div>

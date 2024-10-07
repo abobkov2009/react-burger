@@ -34,7 +34,7 @@ export default function IngredientDetails(): React.JSX.Element {
                 <div className={`pt-10 ${ingredientDetailStyles.container}`}>
                     <div className={`pl-10 pr-10 text text_type_main-large ${ingredientDetailStyles.ingredientTitle}`}>Детали ингредиента</div>
                     <img className={`pb-4 ${ingredientDetailStyles.image}`} src={ingredient!.image_large} alt={ingredient!.name} />
-                    <div className={`pb-8 text text_type_main-medium ${ingredientDetailStyles.ingredientName}`}>{ingredient!.name}</div>
+                    <div className={`pb-8 text text_type_main-medium ${ingredientDetailStyles.ingredientName}`} data-testid="ingredient-details-name">{ingredient!.name}</div>
                     <div className={`pb-15 text text_type_main-default text_color_inactive ${ingredientDetailStyles.nutritionDetails}`}>
                         <NutritionItem caption='Калории,ккал' value={ingredient!.calories} />
                         <NutritionItem caption='Белки, г' value={ingredient!.proteins} />

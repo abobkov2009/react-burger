@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { TIngredient } from '../types';
 import { NORMA_API_URL } from '../../utils/constants';
 
-type TGetResponse = {
+export type TGetResponse = {
     success: boolean;
     data: TIngredient[];
 }

@@ -31,13 +31,13 @@ export default function IngredientCard({ ingredient }: TIngredientCardProps): Re
     });
 
     return (
-        <div ref={dragRef} className={`${ingredientCardStyles.card} ${isDragging && ingredientCardStyles.dragging}`} onClick={handleOnClick}>
+        <div ref={dragRef} className={`${ingredientCardStyles.card} ${isDragging && ingredientCardStyles.dragging}`} onClick={handleOnClick} data-testid={`${ingredient.type}-ingredient-card`}>
             <img src={ingredient.image} alt={ingredient.name} className='mr-4 ml-4' />
             <div className={`mt-1 mb-1 ${ingredientCardStyles.price}`}>
                 <p className="text text_type_digits-default mr-2">{ingredient.price}</p>
                 <CurrencyIcon type="primary" />
             </div>
-            <p className={`text text text_type_main-default ${ingredientCardStyles.ingredientname}`}>{ingredient.name}</p>
+            <p className={`text text text_type_main-default ${ingredientCardStyles.ingredientname}`} data-testid='ingredient-name'>{ingredient.name}</p>
             {(ingredient.amount > 0) && (<Counter count={ingredient.amount} size="small" />)}
         </div>
     )

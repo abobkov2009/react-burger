@@ -19,7 +19,7 @@ export type OrderState = {
     } | null
 }
 
-const initialState: OrderState = {
+export const initialState: OrderState = {
     ingredientsInOrder: {
         bun: null,
         stuffing: [],
@@ -60,11 +60,8 @@ export const orderSlice = createSlice({
             if (action.payload.type === "bun") {
                 state.ingredientsInOrder.bun = null;
             } else {
-                state.ingredientsInOrder.stuffing = state.ingredientsInOrder.stuffing.filter(ingredient => ingredient._uuid !== action.payload._uuid ? ingredient : null);
+                state.ingredientsInOrder.stuffing = state.ingredientsInOrder.stuffing.filter(ingredient => ingredient._uuid !== action.payload._uuid);
             }
-        },
-        allIngredientsInOrderRemoved: (state) => {
-            state.ingredientsInOrder = initialState.ingredientsInOrder;
         },
         orderPlaced: (state, action) => {
             state.orderData = action.payload;
