@@ -1,5 +1,5 @@
-export const NORMA_API_URL = 'https://norma.nomoreparties.space/api';
-export const NORMA_WS_URL = 'wss://norma.nomoreparties.space';
+export const NORMA_API_URL = 'https://norma.education-services.ru/api';
+export const NORMA_WS_URL = 'wss://norma.education-services.ru';
 export const NORMA_WS_FEED_ENDPOINT = '/orders/all';
 export const NORMA_WS_PROFILE_FEED_ENDPOINT = '/orders';
 
